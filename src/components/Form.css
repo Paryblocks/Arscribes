@@ -1,0 +1,43 @@
+form{
+    width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+input,
+textarea,
+select {
+    display: block;
+    margin-top: 10px;
+}
+
+.container {
+    width: 400px;
+    height: 100vh;
+    margin-right: auto; 
+    margin-left: 0; 
+    padding: 20px; 
+    background-color: #f5f5f5;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+.title {
+    text-align: left;
+}
+
+.alinhar {
+    display: flex;
+    align-items: center;
+}
+
+.text {
+    flex: 1;
+}
+
+.button1 {
+    margin-right: 20%;
+}
+.button2 {
+    margin-left: auto;
+}
