@@ -1,0 +1,21 @@
+.container {
+    height: 95vh;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+.form{
+    width: 500px;
+    margin: 0 auto;
+}
+
+.input {
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.button {
+    text-align: center;
+}
