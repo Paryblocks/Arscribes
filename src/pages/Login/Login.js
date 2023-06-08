@@ -8,8 +8,8 @@ const Login = () => {
         <hr></hr>
         <form className={styles.form}>
             <div>
-                <label htmlFor="ident">Nome ou Email:</label>
-                <input className={styles.input} type="text" name="ident" placeholder='Identificador da Conta'/>
+                <label htmlFor="ident">Email:</label>
+                <input className={styles.input} type="email" name="email" placeholder='usuario@email.com'/>
             </div>
             <div>
                 <label htmlFor="senha">Senha:</label>

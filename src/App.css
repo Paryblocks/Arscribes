@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.container {
+  min-height: 60vh;
+  margin-bottom: 5em;
+}
+
 body {
   background-image: url('./images/Placeholder.png');
   background-size: cover;
