@@ -1,6 +1,6 @@
 import { db } from "../firebase/config"
 
-import { getAuth, createUserWithEmailAndPassword, SignInWithEmailAndPassword, updateProfile, signOut} from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut, signInWithEmailAndPassword} from 'firebase/auth'
 import { useState, useEffect } from 'react'
 
 export const useAuthentication = () => {
@@ -16,6 +16,8 @@ export const useAuthentication = () => {
             return
         }
     }
+
+    //cadastro
 
     const createUser = async (data) => {
         checkIfIsCancelled()
@@ -38,9 +40,6 @@ export const useAuthentication = () => {
             return user
 
         }catch(error){
-            console.log(error.message)
-            console.log(typeof error.message)
-
             let systemErrorMessage
             if(error.message.includes("Password")){
                 systemErrorMessage = "A senha precisa conter pelo menos 6 caracteres."
@@ -53,6 +52,37 @@ export const useAuthentication = () => {
         }
     }
 
+    //logout
+
+    const logout = () => {
+        checkIfIsCancelled()
+        signOut(auth)
+    }
+
+    //login
+
+    const login = async(data) => {
+        checkIfIsCancelled()
+        setLoading(true)
+        setError(false)
+
+        try{
+            await signInWithEmailAndPassword(auth, data.email, data.senha)
+            setLoading(false)
+        } catch (error) {
+            let systemErrorMessage
+            if(error.message.includes("user-not-found")){
+                systemErrorMessage = "Usuário não encontrado."
+            }else if(error.message.includes("wrong-password")){
+                systemErrorMessage = "Senha incorreta."
+            } else {
+                systemErrorMessage = "Ocorreu um erro, por favor, tente mais tarde."
+            }
+            setError(systemErrorMessage)
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
@@ -62,5 +92,7 @@ export const useAuthentication = () => {
         createUser,
         error,
         loading,
+        logout,
+        login
     }
 }
