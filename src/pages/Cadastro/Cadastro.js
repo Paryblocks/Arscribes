@@ -38,23 +38,24 @@ const Cadastro = () => {
 
   return (
     <div className={styles.container}>
-        <h2 className={styles.title}>Cadastrar</h2>
-        <hr></hr>
+      <div className={styles.espaco}></div>
         <form onSubmit={handleSubmit} className={styles.form}>
+          <h2 className={styles.nome}>Cadastrar</h2>
+          <hr></hr>
             <div>
-                <label>Nome:</label>
+                <label className={styles.label}>Nome:</label>
                 <input className={styles.input} type="text" name="nome" required placeholder='Nome do Usuário' value={nome} onChange={(e) => setNome(e.target.value)}/>
             </div>
             <div>
-                <label>Email:</label>
+                <label className={styles.label}>Email:</label>
                 <input className={styles.input} type="email" name="email" required placeholder='Email do Usuário' value={email} onChange={(e) => setEmail(e.target.value)}/>
             </div>
             <div>
-                <label>Senha:</label>
+                <label className={styles.label}>Senha:</label>
                 <input className={styles.input} type="password" name="senha" required placeholder='********' value={senha} onChange={(e) => setSenha(e.target.value)}/>
             </div>
             <div>
-                <label>Confirmar Senha:</label>
+                <label className={styles.label}>Confirmar Senha:</label>
                 <input className={styles.input} type="password" name="confirmSenha" required placeholder='********' value={confirmSenha} onChange={(e) => setConfirmSenha(e.target.value)}/>
             </div>
             <div className="alinhar">

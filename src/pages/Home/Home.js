@@ -1,12 +1,9 @@
-import { useAuthentication } from "../../hooks/useAuthentication"
+import styles from "./Home.module.css"
 
 const Home = () => {
-    const { logout } = useAuthentication()
-
   return (
     <div>
         <h1>Home</h1>
-        <button onClick={logout}>Sair</button>
     </div>
   )
 }

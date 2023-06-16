@@ -50,13 +50,11 @@ const Login = () => {
         </form>
         {error && <p>{error}</p>}
         <hr></hr>
-        <div className="alinhar">
-          <nav>
-            <NavLink to="/cadastro">
-              <h3 className={styles.title}>Não tem uma conta?</h3>
-            </NavLink>
-          </nav>
-        </div>
+        <nav>
+          <NavLink to="/cadastro">
+            <h3 className={styles.title}>Não tem uma conta?</h3>
+          </NavLink>
+        </nav>
     </div>
   )
 }
