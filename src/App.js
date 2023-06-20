@@ -17,6 +17,7 @@ import Login from './pages/Login/Login';
 import Cadastro from './pages/Cadastro/Cadastro';
 import Collection from './pages/Collection/Collection';
 import Home from './pages/Home/Home';
+import Biblioteca from './pages/Biblioteca/Biblioteca';
 
 function App() {
 
@@ -41,9 +42,10 @@ function App() {
         <Navbar/>
           <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/library" element={<Biblioteca/>}/>
             <Route path="/collection" element={user ? <Collection/> : <Navigate to="/login"/>}/>
             <Route path="/login" element={!user ? <Login/> : <Navigate to="/collection"/>}/>
-            <Route path="/cadastro" element={!user ? <Cadastro/> : <Navigate to="/collection"/>}/>
+            <Route path="/register" element={!user ? <Cadastro/> : <Navigate to="/collection"/>}/>
           </Routes>
           <Footer/>
         </BrowserRouter>

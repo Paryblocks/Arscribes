@@ -1,0 +1,19 @@
+.container {
+    height: 85vh;
+    background-color: aliceblue;
+}
+
+.box_column {
+    display: flex;
+    padding-left: 2em;
+    flex-direction: column;
+}
+
+.box {
+    padding-left: 2em;
+    text-align: left;
+}
+
+.aproximar {
+    margin-top: 0;
+}
