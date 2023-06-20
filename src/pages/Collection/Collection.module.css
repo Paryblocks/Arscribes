@@ -1,0 +1,10 @@
+.container {
+    height: 85vh;
+    background-color: aliceblue;
+}
+
+.box {
+    display: flex;
+    padding-left: 2em;
+    text-align: left;
+}

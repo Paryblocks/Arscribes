@@ -25,6 +25,11 @@
     color: aliceblue;
 }
 
+.button {
+    padding: .1em;
+    margin-left: .3em;
+}
+
 .active {
     background-color: rgb(1, 8, 44);
     border-radius: 12px;
