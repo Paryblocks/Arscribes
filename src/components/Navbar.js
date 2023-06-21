@@ -38,7 +38,7 @@ const Navbar = () => {
             <button className={styles.button} onClick={logout}>Sair</button>
         </li>
         <li>
-            <NavLink to="/Profile"><img className={styles.image_cropper} src={userImage} alt="Perfil"/></NavLink>
+            <NavLink to="/profile"><img className={styles.image_cropper} src={userImage} alt="Perfil"/></NavLink>
         </li>
         </>
         )}

@@ -40,4 +40,6 @@
     height: 3em;
     overflow: hidden;
     border-radius: 50%;
+    position: absolute;
+    top: 12px;
 }

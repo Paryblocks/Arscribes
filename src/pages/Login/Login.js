@@ -51,7 +51,7 @@ const Login = () => {
         {error && <p>{error}</p>}
         <hr></hr>
         <nav>
-          <NavLink to="/cadastro">
+          <NavLink to="/register">
             <h3 className={styles.title}>Não tem uma conta?</h3>
           </NavLink>
         </nav>
