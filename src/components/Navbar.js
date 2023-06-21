@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom"
 import { useAuthentication } from "../hooks/useAuthentication"
 import { useAuthValue } from "../context/AuthContext"
 import styles from "./Navbar.module.css"
+import userImage from "../images/Placeholder.png"
 
 const Navbar = () => {
     const { user } = useAuthValue();
@@ -31,7 +32,13 @@ const Navbar = () => {
             <NavLink to="/collection" className={({isActive}) => (isActive ? styles.active : '')}>Suas Coleções</NavLink>
         </li>
         <li>
+            <NavLink to="/create" className={({isActive}) => (isActive ? styles.active : '')}>Criar Modelo</NavLink>
+        </li>
+        <li>
             <button className={styles.button} onClick={logout}>Sair</button>
+        </li>
+        <li>
+            <NavLink to="/Profile"><img className={styles.image_cropper} src={userImage} alt="Perfil"/></NavLink>
         </li>
         </>
         )}

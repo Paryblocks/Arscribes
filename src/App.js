@@ -18,6 +18,8 @@ import Cadastro from './pages/Cadastro/Cadastro';
 import Collection from './pages/Collection/Collection';
 import Home from './pages/Home/Home';
 import Biblioteca from './pages/Biblioteca/Biblioteca';
+import CriarFicha from './pages/CriarFicha/CriarFicha';
+import Perfil from './pages/Perfil/Perfil';
 
 function App() {
 
@@ -44,6 +46,8 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path="/library" element={<Biblioteca/>}/>
             <Route path="/collection" element={user ? <Collection/> : <Navigate to="/login"/>}/>
+            <Route path="/create" element={user ? <CriarFicha/> : <Navigate to="/login"/>}/>
+            <Route path="/profile" element={user ? <Perfil/> : <Navigate to="/login"/>}/>
             <Route path="/login" element={!user ? <Login/> : <Navigate to="/collection"/>}/>
             <Route path="/register" element={!user ? <Cadastro/> : <Navigate to="/collection"/>}/>
           </Routes>
