@@ -3,7 +3,7 @@ import { db, storage } from "../firebase/config"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut, signInWithEmailAndPassword} from 'firebase/auth'
 import { useState, useEffect } from 'react'
 import { collection, setDoc, doc } from "firebase/firestore"
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
+import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage"
 
 import defaultPf from '../images/DefaultPf.jpg'
 
@@ -49,7 +49,10 @@ export const useAuthentication = () => {
                 displayName: data.nome,
                 photoURL: photoURL,
                 bio: null,
-                sistemas: null
+                sistemas: null,
+                fichasCriadas: null,
+                personagensCriados: null,
+                registro: user.metadata.creationTime
             });
 
             await updateProfile(user, {
@@ -118,27 +121,31 @@ export const useAuthentication = () => {
             })
 
             const usuariosCollectionRef = collection(db, "usuarios");
-            await setDoc(usuariosCollectionRef.doc(auth.currentUser.uid), {
+            const userDocRef = doc(usuariosCollectionRef, auth.currentUser.uid)
+            await setDoc(userDocRef, {
               displayName: data.nome,
-              photoURL: auth.currentUser.photoURL,
               bio: data.bio,
-              sistemas: data.sistemas,
-            });
+              sistemas: data.sistemas.split(",").map((sistema) => sistema.trim()),
+            }, { merge: true } )
         
             if (data.foto) {
-              const storageRef = storage.ref('profiles/' + auth.currentUser.uid + '/perfil.jpg');
-              const file = await fetch(data.foto)
-              const fileBlob = await file.blob()
-           
-              await uploadBytes(storageRef, fileBlob)
-              const photoURL = await storageRef.getDownloadURL();
-        
-              await setDoc(usuariosCollectionRef.doc(auth.currentUser.uid), {
-                photoURL: photoURL,
-              });
-              await updateProfile(auth.currentUser, {
-                photoURL: photoURL,
-            })
+
+                const storageRef = ref(storage, 'profiles/' + auth.currentUser.uid + '/perfil.jpg')
+                const file = await fetch(data.foto)
+                const fileBlob = await file.blob()
+                
+                await deleteObject(storageRef)
+                await uploadBytes(storageRef, fileBlob)
+
+                const photoURL = await getDownloadURL(storageRef)
+
+                await setDoc(userDocRef, {
+                        photoURL: photoURL,
+                    }, { merge: true } );
+
+                    await updateProfile(auth.currentUser, {
+                        photoURL: photoURL,
+                    })
             }
 
         }catch(error){

@@ -11,20 +11,20 @@ const Editar = () => {
   const [error, setError] = useState("")
   const navigate = useNavigate()
 
-  const { editUser, error: authError, loading, auth } = useAuthentication()
+  const { editUser, error: authError, loading } = useAuthentication()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError("")
 
     const updatedUser = {
-      nome: nome,
-      sistemas: sistemas.split(","),
-      foto: foto,
-      bio: bio,
+      nome,
+      sistemas,
+      foto,
+      bio,
     }
 
-    await editUser(updatedUser)
+    const res = await editUser(updatedUser)
     navigate('/profile')
   }
 
@@ -38,9 +38,10 @@ const Editar = () => {
     <div className={styles.container}>
         <div className={styles.box}>
             <h1>Editar Perfil</h1>
+            {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <h3>Nome:</h3>
-                <input className={styles.input} type="text" name="nome" required placeholder='Nome do Usuário' onChange={(e) => setName(e.target.value)} value={auth.currentUser.displayName}/>
+                <input className={styles.input} type="text" name="nome" required placeholder='Nome do Usuário' onChange={(e) => setName(e.target.value)} value={nome}/>
                 <h3>Sistemas Favoritos:</h3>
                 <input className={styles.input} type="text" name="sistemas" placeholder='Insira os nomes separado por vírgula' onChange={(e) => setSistemas(e.target.value)} value={sistemas}/>
                 <h3>Foto de Perfil:</h3>
@@ -53,7 +54,6 @@ const Editar = () => {
                 <br></br>
                 {!loading && <button>Confirmar</button>}
                 {loading && <button disabled>Aguarde...</button>}
-                {error && <p>{error}</p>}
             </form>                  
         </div>
     </div>
