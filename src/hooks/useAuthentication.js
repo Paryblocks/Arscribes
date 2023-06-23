@@ -1,7 +1,11 @@
-import { db } from "../firebase/config"
+import { db, storage } from "../firebase/config"
 
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut, signInWithEmailAndPassword} from 'firebase/auth'
 import { useState, useEffect } from 'react'
+import { collection, setDoc, doc } from "firebase/firestore"
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
+
+import defaultPf from '../images/DefaultPf.jpg'
 
 export const useAuthentication = () => {
     const [error, setError] = useState(null)
@@ -31,8 +35,26 @@ export const useAuthentication = () => {
                 data.senha
             )
 
+            const storageRef = ref(storage, 'profiles/' + user.uid + '/perfil.jpg')
+            
+            const file = await fetch(defaultPf)
+            const fileBlob = await file.blob()
+           
+            await uploadBytes(storageRef, fileBlob)
+            const photoURL = await getDownloadURL(storageRef)
+
+            const usuariosCollectionRef = collection(db, "usuarios")
+            const userDocRef = doc(usuariosCollectionRef, user.uid)
+            await setDoc(userDocRef, {
+                displayName: data.nome,
+                photoURL: photoURL,
+                bio: null,
+                sistemas: null
+            });
+
             await updateProfile(user, {
-                displayName: data.nome
+                displayName: data.nome,
+                photoURL: photoURL
             })
 
             setLoading(false)
@@ -83,6 +105,49 @@ export const useAuthentication = () => {
         }
     }
 
+    //editar
+
+    const editUser = async (data) => {
+        checkIfIsCancelled()
+        setLoading(true)
+        setError(null)
+
+        try{
+            await updateProfile(auth.currentUser, {
+                displayName: data.nome,
+            })
+
+            const usuariosCollectionRef = collection(db, "usuarios");
+            await setDoc(usuariosCollectionRef.doc(auth.currentUser.uid), {
+              displayName: data.nome,
+              photoURL: auth.currentUser.photoURL,
+              bio: data.bio,
+              sistemas: data.sistemas,
+            });
+        
+            if (data.foto) {
+              const storageRef = storage.ref('profiles/' + auth.currentUser.uid + '/perfil.jpg');
+              const file = await fetch(data.foto)
+              const fileBlob = await file.blob()
+           
+              await uploadBytes(storageRef, fileBlob)
+              const photoURL = await storageRef.getDownloadURL();
+        
+              await setDoc(usuariosCollectionRef.doc(auth.currentUser.uid), {
+                photoURL: photoURL,
+              });
+              await updateProfile(auth.currentUser, {
+                photoURL: photoURL,
+            })
+            }
+
+        }catch(error){
+            let systemErrorMessage
+            systemErrorMessage = "Ocorreu um erro, por favor, tente mais tarde."
+            setError(systemErrorMessage)
+        }
+    }
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
@@ -93,6 +158,7 @@ export const useAuthentication = () => {
         error,
         loading,
         logout,
-        login
+        login,
+        editUser
     }
 }

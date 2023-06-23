@@ -1,15 +1,17 @@
 import styles from './Perfil.module.css'
-import userImage from "../../images/Placeholder.png"
 import { NavLink } from 'react-router-dom'
+import { useAuthentication } from '../../hooks/useAuthentication'
 
 const Perfil = () => {
+  const { auth } = useAuthentication() 
+  
   return (
     <div className={styles.container}>
         <div className={styles.box}>
-            <h1>Nome do Usuário</h1>
+            <h1>{auth.currentUser.displayName}</h1>
             <h2>Sobre:</h2>
             <div className={styles.bio}></div>
-            <img className={styles.image_cropper} src={userImage} alt="Perfil"/>
+            <img className={styles.image_cropper} src={auth.currentUser.photoURL} alt="Perfil"/>
             <NavLink to="/profile/edit"><button className={styles.button}>Atualizar dados</button></NavLink>
             <br></br>
             <h3>Número de personagens criados: xxx</h3>  
