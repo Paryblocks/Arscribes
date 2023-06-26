@@ -9,7 +9,7 @@ import defaultPf from '../images/DefaultPf.jpg'
 
 export const useAuthentication = () => {
     const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const [cancelled, setCancelled] = useState(false)
 
@@ -60,8 +60,6 @@ export const useAuthentication = () => {
                 photoURL: photoURL
             })
 
-            setLoading(false)
-
             return user
 
         }catch(error){
@@ -74,6 +72,8 @@ export const useAuthentication = () => {
                 systemErrorMessage = "Ocorreu um erro, por favor, tente mais tarde."
             }
             setError(systemErrorMessage)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -103,7 +103,8 @@ export const useAuthentication = () => {
             } else {
                 systemErrorMessage = "Ocorreu um erro, por favor, tente mais tarde."
             }
-            setError(systemErrorMessage)
+            setError(systemErrorMessage)        
+        } finally {
             setLoading(false)
         }
     }
@@ -120,7 +121,7 @@ export const useAuthentication = () => {
                 displayName: data.nome,
             })
 
-            const usuariosCollectionRef = collection(db, "usuarios");
+            const usuariosCollectionRef = collection(db, "usuarios")
             const userDocRef = doc(usuariosCollectionRef, auth.currentUser.uid)
             await setDoc(userDocRef, {
               displayName: data.nome,
@@ -137,7 +138,7 @@ export const useAuthentication = () => {
 
                 await setDoc(userDocRef, {
                         photoURL: photoURL,
-                    }, { merge: true } );
+                    }, { merge: true } )
 
                     await updateProfile(auth.currentUser, {
                         photoURL: photoURL,
@@ -148,6 +149,8 @@ export const useAuthentication = () => {
             let systemErrorMessage
             systemErrorMessage = "Ocorreu um erro, por favor, tente mais tarde."
             setError(systemErrorMessage)
+        } finally {
+            setLoading(false)
         }
     }
 
