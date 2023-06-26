@@ -2,6 +2,7 @@ import styles from './Editar.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useAuthentication } from '../../hooks/useAuthentication'
+import { useRetrieveDatabase } from '../../hooks/useRetrieveDatabase'
 
 const Editar = () => {
   const [nome, setName] = useState("")
@@ -9,9 +10,16 @@ const Editar = () => {
   const [foto, setFoto] = useState("")
   const [bio, setBio] = useState("") 
   const [error, setError] = useState("")
+  const { auth } = useAuthentication() 
   const navigate = useNavigate()
 
   const { editUser, error: authError, loading } = useAuthentication()
+  const { retrieveUser, user } = useRetrieveDatabase()
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]
+    setFoto(file)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -27,6 +35,19 @@ const Editar = () => {
     const res = await editUser(updatedUser)
     navigate('/profile')
   }
+
+  useEffect(() => {
+    const userId = auth.currentUser.uid
+    retrieveUser(userId)
+  }, [])
+
+  useEffect(() => {
+    if (!loading && user) {
+      setName(user.displayName || "")
+      setSistemas(user.sistemas || [])
+      setBio(user.bio || "")
+    }
+  }, [user, loading])
 
   useEffect(() => {
     if(authError){
@@ -45,8 +66,7 @@ const Editar = () => {
                 <h3>Sistemas Favoritos:</h3>
                 <input className={styles.input} type="text" name="sistemas" placeholder='Insira os nomes separado por vírgula' onChange={(e) => setSistemas(e.target.value)} value={sistemas}/>
                 <h3>Foto de Perfil:</h3>
-                <p>Certifique-se de escolher um arquivo de imagem válido!</p>
-                <input type="file" name="foto" onChange={(e) => setFoto(e.target.value)} value={foto}/>
+                <input type="file" accept="image/png, image/jpeg" name="foto" onChange={handleFileChange}/>
                 <h2>Sobre:</h2>
                 <textarea className={styles.bio} required placeholder='Um pouco sobre você..' onChange={(e) => setBio(e.target.value)} value={bio}></textarea>
                 <br></br>

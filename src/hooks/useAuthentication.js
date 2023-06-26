@@ -3,7 +3,7 @@ import { db, storage } from "../firebase/config"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut, signInWithEmailAndPassword} from 'firebase/auth'
 import { useState, useEffect } from 'react'
 import { collection, setDoc, doc } from "firebase/firestore"
-import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage"
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 import defaultPf from '../images/DefaultPf.jpg'
 
@@ -129,13 +129,9 @@ export const useAuthentication = () => {
             }, { merge: true } )
         
             if (data.foto) {
-
                 const storageRef = ref(storage, 'profiles/' + auth.currentUser.uid + '/perfil.jpg')
-                const file = await fetch(data.foto)
-                const fileBlob = await file.blob()
-                
-                await deleteObject(storageRef)
-                await uploadBytes(storageRef, fileBlob)
+
+                await uploadBytes(storageRef, data.foto)
 
                 const photoURL = await getDownloadURL(storageRef)
 

@@ -3,12 +3,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCg1o4GSTqiamzZIhJR5b6AK-2Yffvwl00",
-  authDomain: "arscribes-3c156.firebaseapp.com",
-  projectId: "arscribes-3c156",
-  storageBucket: "arscribes-3c156.appspot.com",
-  messagingSenderId: "697068104061",
-  appId: "1:697068104061:web:400cbd6d91c17dc3094414"
+  apiKey: "AIzaSyA0iMHkVQn6eq7Smsmo7NzcEDpg8ATDgLU",
+  authDomain: "arscribes-5193c.firebaseapp.com",
+  projectId: "arscribes-5193c",
+  storageBucket: "arscribes-5193c.appspot.com",
+  messagingSenderId: "894332334396",
+  appId: "1:894332334396:web:bdbaa49f56b4c743d16e39"
 };
 
 const app = initializeApp(firebaseConfig);
