@@ -48,7 +48,7 @@ export const useRetrieveDatabase = () => {
 
             const newData = []
             querySnapshot.forEach((doc) => {
-                newData.push({id: doc,id, ...doc.data()})
+                newData.push({id: doc.id, ...doc.data()})
             })
 
             setList(newData)

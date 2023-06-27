@@ -9,7 +9,7 @@ import defaultPf from '../images/DefaultPf.jpg'
 
 export const useAuthentication = () => {
     const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(null)
 
     const [cancelled, setCancelled] = useState(false)
 
@@ -38,9 +38,8 @@ export const useAuthentication = () => {
             const storageRef = ref(storage, 'profiles/' + user.uid + '/perfil.jpg')
             
             const file = await fetch(defaultPf)
-            const fileBlob = await file.blob()
            
-            await uploadBytes(storageRef, fileBlob)
+            await uploadBytes(storageRef, file)
             const photoURL = await getDownloadURL(storageRef)
 
             const usuariosCollectionRef = collection(db, "usuarios")

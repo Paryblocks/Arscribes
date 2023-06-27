@@ -21,6 +21,7 @@ import Biblioteca from './pages/Biblioteca/Biblioteca';
 import CriarFicha from './pages/CriarFicha/CriarFicha';
 import Perfil from './pages/Perfil/Perfil';
 import Editar from './pages/Perfil/Editar'
+import Importar from './pages/CriarFicha/Importar'
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
             <Route path="/library" element={<Biblioteca/>}/>
             <Route path="/collection" element={user ? <Collection/> : <Navigate to="/login"/>}/>
             <Route path="/create" element={user ? <CriarFicha/> : <Navigate to="/login"/>}/>
+            <Route path="/create/import" element={user ? <Importar/> : <Navigate to="/login"/>}/>
             <Route path="/profile" element={user ? <Perfil/> : <Navigate to="/login"/>}/>
             <Route path="/profile/edit" element={user ? <Editar/> : <Navigate to="/login"/>}/>
             <Route path="/login" element={!user ? <Login/> : <Navigate to="/collection"/>}/>

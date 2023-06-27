@@ -3,12 +3,11 @@ import { useState, useEffect } from 'react'
 import { collection, updateDoc, setDoc, getDoc, doc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { getAuth } from 'firebase/auth'
-//lembrar de dar o Yarn add uuid
 import { v4 } from 'uuid'
 
 
 export const useSheet = () => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(null)
     const [cancelled, setCancelled] = useState(false)
     
     const auth = getAuth()
@@ -28,6 +27,8 @@ export const useSheet = () => {
             const fileName = v4() + '.pdf'
             const storageRef = ref(storage, 'sheets/' + fileName)
 
+            const fileReader = new FileReader()
+
             await uploadBytes(storageRef, data.file)
             const sheetURL = await getDownloadURL(storageRef)
 
@@ -35,9 +36,9 @@ export const useSheet = () => {
             const userDocRef = doc(usuariosCollectionRef, auth.currentUser.uid)
 
             const userDoc = await getDoc(userDocRef)
-            const personagensCriados = userDoc.data().personagensCriados || []            
-            personagensCriados.push(sheetURL)
-            await updateDoc(userDocRef, { personagensCriados })
+            const fichasCriadas = userDoc.data().fichasCriadas || []            
+            fichasCriadas.push(sheetURL)
+            await updateDoc(userDocRef, { fichasCriadas })
 
             const sheetsCollectionRef = collection(db, "fichas")
             const sheetDocRef = doc(sheetsCollectionRef, fileName)
@@ -61,6 +62,7 @@ export const useSheet = () => {
     }, [])
 
     return {
-        postSheet
+        postSheet,
+        loading
     }
 }

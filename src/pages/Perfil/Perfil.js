@@ -27,11 +27,11 @@ const Perfil = () => {
             <img className={styles.image_cropper} src={user.photoURL} alt="Perfil"/>
             <NavLink to="/profile/edit"><button className={styles.button}>Atualizar dados</button></NavLink>
             <br></br>
-            <h3>Número de personagens criados: {user.personagensCriados ? (user.personagensCriados) : 0}</h3>  
+            <h3>Número de personagens criados: {user.personagensCriados ? user.personagensCriados.length : 0}</h3>  
             <h3>Sistemas Favoritos: {user.sistemas ? (user.sistemas.length > 1 ? user.sistemas.join(', ') : user.sistemas) : 'Não especificado'}</h3>           
             <h3>Data de Registro: {user.registro && format(new Date(user.registro), 'dd/MM/yyyy')}</h3>
             <br></br>
-            <h2>Criações de Nome do Usuário</h2>                   
+            <h2>Criações de {user.displayName}</h2>                   
         </div>
         <hr></hr>
     </div>
