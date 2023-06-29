@@ -27,8 +27,6 @@ export const useSheet = () => {
             const fileName = v4() + '.pdf'
             const storageRef = ref(storage, 'sheets/' + fileName)
 
-            const fileReader = new FileReader()
-
             await uploadBytes(storageRef, data.file)
             const sheetURL = await getDownloadURL(storageRef)
 

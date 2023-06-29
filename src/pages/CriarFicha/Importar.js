@@ -11,8 +11,7 @@ const Importar = () => {
     const { postSheet, loading } = useSheet();
 
     const handleFileChange = (event) => {
-        const file = event.target.files[0]
-        setFile(file)
+        setFile(event.target.files[0])
     }
 
     const handleSubmit = async (e) => {
