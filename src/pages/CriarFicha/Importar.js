@@ -1,12 +1,14 @@
 import { useSheet } from '../../hooks/useSheet'
 import styles from './CriarFicha.module.css'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Importar = () => {
     const [nome, setNome] = useState("")
     const [sistema, setSistema] = useState("")
     const [descricao, setDescricao] = useState("")
-    const [file, setFile] = useState("")
+    const [file, setFile] = useState(null)
+    const navigate = useNavigate()
 
     const { postSheet, loading } = useSheet();
 
@@ -25,7 +27,7 @@ const Importar = () => {
         }
     
         const res = await postSheet(ficha)
-    
+        navigate('/library')
       }
 
   return (
@@ -48,7 +50,7 @@ const Importar = () => {
                 </div>
                 <div className={styles.label}>
                     <label>PDF da Ficha:</label>
-                    <input className={styles.inpuF} type="file" name="file" required value={file} onChange={handleFileChange} accept="application/pdf"/>
+                    <input className={styles.inpuF} type="file" name="file" required onChange={handleFileChange} accept="application/pdf"/>
                 </div>
                 <div className="alinhar">
                     {!loading && <button>Registrar modelo</button>}
