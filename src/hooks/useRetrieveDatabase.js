@@ -46,15 +46,15 @@ export const useRetrieveDatabase = () => {
             const sheetsRef = collection(db, 'fichas')
             const querySnapshot = await getDocs(sheetsRef)
 
-            const newData = []
-            querySnapshot.forEach((doc) => {
-                newData.push({id: doc.id, ...doc.data()})
-            })
+            const newData = querySnapshot.docs.map((doc) => {
+                return { id: doc.id, ...doc.data() }
+              })
 
-            setList(newData)
+            return newData
         
         } catch (error) {
             console.log('Erro: ' + error)
+            return []
         } finally {
             setLoading(false)
         }
@@ -92,7 +92,6 @@ export const useRetrieveDatabase = () => {
         retrieveUser,
         getInfo,
         getSheets,
-        sheet,
-        list
+        sheet
     }
 }
