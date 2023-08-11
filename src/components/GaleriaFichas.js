@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { useRetrieveDatabase } from '../hooks/useRetrieveDatabase'
+import { NavLink } from "react-router-dom"
 
 import styles from './GaleriaFichas.module.css'
 
@@ -40,12 +41,14 @@ const GaleriaFichas = () => {
         <div>
             <div ref={galleryRef} className={styles.container}>
             {currentPdfs.map((pdf) => (
-                <div key={pdf.id} className={styles.pdf}>
-                    <span>{pdf.nome}</span>
-                    <Document file={pdf.sheetURL}>
-                        <Page pageNumber={1} width={200}/>
-                    </Document>
-                </div>
+                <NavLink to="/library/sheet">
+                    <div key={pdf.id} className={styles.pdf}>
+                        <span>{pdf.nome}</span>
+                        <Document file={pdf.sheetURL}>
+                            <Page pageNumber={1} width={200}/>
+                        </Document>
+                    </div>
+                </NavLink>
             ))}
             </div>
             <div className={styles.buttons}>
