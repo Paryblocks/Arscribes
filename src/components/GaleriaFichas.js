@@ -41,7 +41,7 @@ const GaleriaFichas = () => {
         <div>
             <div ref={galleryRef} className={styles.container}>
             {currentPdfs.map((pdf) => (
-                <NavLink to="/library/sheet">
+                  <NavLink to={`/library/sheet?id=${pdf.id}`} key={pdf.id}>
                     <div key={pdf.id} className={styles.pdf}>
                         <span>{pdf.nome}</span>
                         <Document file={pdf.sheetURL}>
