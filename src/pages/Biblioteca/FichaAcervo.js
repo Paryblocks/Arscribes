@@ -23,13 +23,13 @@ const FichaAcervo = () => {
     <div className={styles.container}>
         <div className={styles.box2}>
             <h2>Descrição:</h2>
-            <h2>Nome da ficha</h2>
+            <h2>{sheet.nome}</h2>
         </div>
         <div className={styles.box3}>
           <div className={styles.desc}>{sheet.descricao}</div>
           <div className={styles.pdf}>
             <Document file={sheet.sheetURL}>
-              <Page pageNumber={1} width={500}/>
+              <Page pageNumber={1} width={800}/>
             </Document>
           </div>
         </div>
