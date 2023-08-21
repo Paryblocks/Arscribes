@@ -37,7 +37,7 @@ const Navbar = () => {
             <button className={styles.button} onClick={logout}>Sair</button>
         </li>
         <li>
-            <NavLink to="/profile"><img className={styles.image_cropper} src={auth.currentUser.photoURL} alt="Perfil"/></NavLink>
+            <NavLink to={`/profile?id=${auth.currentUser.uid}`}><img className={styles.image_cropper} src={auth.currentUser.photoURL} alt="Perfil"/></NavLink>
         </li>
         </>
         )}

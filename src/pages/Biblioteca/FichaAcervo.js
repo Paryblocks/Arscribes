@@ -10,9 +10,15 @@ const FichaAcervo = () => {
   const itemId = queryParams.get('id');
 
   const { getInfo, sheet } = useRetrieveDatabase()
+  const { retrieveUser, user } = useRetrieveDatabase()
+
+  function handleGetInfo (){
+    return getInfo(itemId)
+  };
 
   useEffect(() => {
-    getInfo(itemId)
+    const x = new Promise(handleGetInfo)
+    x.then(() => retrieveUser(sheet.Idcriador))
   }, [])
   
   if(!sheet) {
@@ -32,6 +38,9 @@ const FichaAcervo = () => {
               <Page pageNumber={1} width={800}/>
             </Document>
           </div>
+        </div>
+        <div className={styles.box2}>
+          <h3>Postado por: { user ? user.displayName : 'Usuário não encontrado'}</h3>
         </div>
         <div className={styles.bottom}>
             <button className={styles.butto}>Adicionar</button>
