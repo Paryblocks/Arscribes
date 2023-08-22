@@ -41,7 +41,6 @@ const Cadastro = () => {
       <div className={styles.espaco}></div>
         <form onSubmit={handleSubmit} className={styles.form}>
           <h2 className={styles.nome}>Cadastrar</h2>
-          <hr></hr>
             <div>
                 <label className={styles.label}>Nome:</label>
                 <input className={styles.input} type="text" name="nome" required placeholder='Nome do Usuário' value={nome} onChange={(e) => setNome(e.target.value)}/>

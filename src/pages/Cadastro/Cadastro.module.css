@@ -1,5 +1,5 @@
 .container {
-    height: 82.4vh; 
+    height: 115vh; 
 }
 
 .form{
@@ -8,7 +8,7 @@
     padding: 20px; 
     border-radius: 4px;
     width: 40%;
-    height: 75%;
+    height: 85%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -32,8 +32,4 @@
 
 .espaco{
     height: 7vh;
-}
-
-.nome{
-    margin-top: -20vh;
 }

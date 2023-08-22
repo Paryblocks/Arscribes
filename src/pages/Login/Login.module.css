@@ -11,7 +11,7 @@
 }
 
 .container {
-    width: 42vh;
+    width: 46vh;
     height: 78vh;
     margin-right: auto; 
     margin-left: 0; 
@@ -28,12 +28,5 @@
 .alinhar {
     display: flex;
     align-items: center;
-}
-
-.text {
-    flex: 1;
-}
-
-.button {
-    margin-right: 25%;
+    gap: 8%;
 }
