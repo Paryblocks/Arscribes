@@ -71,6 +71,14 @@ export const useRetrieveDatabase = () => {
 
             if (sheetDocSnapshot.exists()) {
                 setSheet(sheetDocSnapshot.data())
+                const userDocRef = doc(collection(db, 'usuarios'), sheet.Idcriador)
+                const userDocSnapshot = await getDoc(userDocRef)
+
+                if (userDocSnapshot.exists()) {
+                    setUser(userDocSnapshot.data())
+                } else {
+                    console.log('Usuario não encontrado')
+                }
             } else {
                 console.log('Ficha não encontrada')
             }

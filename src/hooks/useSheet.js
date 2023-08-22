@@ -45,7 +45,8 @@ export const useSheet = () => {
                 descricao: data.descricao,
                 sistema: data.sistema,
                 sheetURL: sheetURL,
-                Idcriador: auth.currentUser.uid
+                Idcriador: auth.currentUser.uid,
+                NomeCriador: auth.currentUser.displayName
             })
 
         }catch(error){

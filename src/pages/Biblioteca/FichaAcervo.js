@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom';
 import { useRetrieveDatabase } from '../../hooks/useRetrieveDatabase'
 import { Document, Page, pdfjs } from 'react-pdf'
+import { NavLink } from "react-router-dom"
 
 const FichaAcervo = () => {
   const location = useLocation();
@@ -10,15 +11,13 @@ const FichaAcervo = () => {
   const itemId = queryParams.get('id');
 
   const { getInfo, sheet } = useRetrieveDatabase()
-  const { retrieveUser, user } = useRetrieveDatabase()
 
   function handleGetInfo (){
     return getInfo(itemId)
   };
 
   useEffect(() => {
-    const x = new Promise(handleGetInfo)
-    x.then(() => retrieveUser(sheet.Idcriador))
+    handleGetInfo()
   }, [])
   
   if(!sheet) {
@@ -40,7 +39,7 @@ const FichaAcervo = () => {
           </div>
         </div>
         <div className={styles.box2}>
-          <h3>Postado por: { user ? user.displayName : 'Usuário não encontrado'}</h3>
+          <h3>Postado por: <NavLink to={`/profile?id=${sheet.Idcriador}`}>{sheet.NomeCriador}</NavLink></h3>
         </div>
         <div className={styles.bottom}>
             <button className={styles.butto}>Adicionar</button>
