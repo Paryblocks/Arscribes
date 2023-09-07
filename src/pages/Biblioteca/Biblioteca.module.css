@@ -43,6 +43,16 @@
     width: 75vh;
 }
 
+.download{
+    background-color: rgb(61, 66, 77);
+    color: aliceblue;
+    padding: 1px;
+    border-radius: 4px;
+    height: 40px;
+    width: 75vh;
+    font-size: 15px;
+}
+
 .pdf {
     display: inline-block;
     width: 800px;

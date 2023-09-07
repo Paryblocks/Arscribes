@@ -43,7 +43,7 @@ const FichaAcervo = () => {
         </div>
         <div className={styles.bottom}>
             <button className={styles.butto}>Adicionar</button>
-            <button className={styles.butto}>Download</button>
+            <a href={sheet.sheetURL} download={`${sheet.nome}.pdf`} className={styles.download}>Download</a>
             <h3></h3>
         </div>
     </div>
