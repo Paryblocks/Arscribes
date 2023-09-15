@@ -34,7 +34,7 @@ const Navbar = () => {
             <NavLink to="/create" className={({isActive}) => (isActive ? styles.active : '')}>Criar Modelo</NavLink>
         </li>
         <li>
-            <button className={styles.button} onClick={logout}>Sair</button>
+            <NavLink className={styles.button} onClick={logout}>Sair</NavLink>
         </li>
         <li>
             <NavLink to={`/profile?id=${auth.currentUser.uid}`}><img className={styles.image_cropper} src={auth.currentUser.photoURL} alt="Perfil"/></NavLink>

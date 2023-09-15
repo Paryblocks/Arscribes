@@ -1,6 +1,6 @@
 import { db } from "../firebase/config"
 import { useState, useEffect } from 'react'
-import { collection, getDoc, getDocs, doc } from "firebase/firestore"
+import { collection, query, where, getDoc, getDocs, doc } from "firebase/firestore"
 
 export const useRetrieveDatabase = () => {
     const [sheet, setSheet] = useState(null)
@@ -26,6 +26,11 @@ export const useRetrieveDatabase = () => {
 
             if (userDocSnapshot.exists()) {
                 setUser(userDocSnapshot.data())
+                const sheetsQuery = query(collection(db, 'fichas'), where('Idcriador', '==', userId));
+                const sheetsQuerySnapshot = await getDocs(sheetsQuery);
+
+                const userSheets = sheetsQuerySnapshot.docs.map((doc) => doc.data());
+                setList(userSheets);
             } else {
                 console.log('Usuario não encontrado')
             }
@@ -100,6 +105,7 @@ export const useRetrieveDatabase = () => {
         retrieveUser,
         getInfo,
         getSheets,
-        sheet
+        sheet,
+        list
     }
 }
