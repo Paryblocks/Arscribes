@@ -59,3 +59,7 @@
     height: 40vh;
     overflow: hidden;
 }
+
+.load {
+    height: 100vh; 
+}

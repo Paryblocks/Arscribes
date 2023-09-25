@@ -21,7 +21,9 @@ const FichaAcervo = () => {
   }, [])
   
   if(!sheet) {
-    return <p>Carregando...</p>
+    return <div className={styles.load}>
+      <p>Carregando...</p>
+    </div>
   }
 
   return (

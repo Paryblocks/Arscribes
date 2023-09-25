@@ -24,7 +24,9 @@ const Perfil = () => {
   }, [dadosCarregados])
   
   if(!user) {
-    return <p>Carregando...</p>
+    return <div className={styles.load}>
+      <p>Carregando...</p>
+    </div>
   }
 
   return (
