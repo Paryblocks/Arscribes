@@ -7,7 +7,7 @@ import styles from './GaleriaFichas.module.css'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`
 
-const GaleriaFichas = () => { 
+const GaleriaFichas = ({fichas}) => { 
     const [pdfs, setPdfs] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
     const galleryRef = useRef(null)
@@ -15,9 +15,13 @@ const GaleriaFichas = () => {
 
     useEffect(() => {
         const fetchPdfs = async () => {
-        const listaFichas = await getSheets()
-        setPdfs(listaFichas || [])
-        };
+            if (fichas) {
+                setPdfs(fichas)
+              } else {
+                const listaFichas = await getSheets()
+                setPdfs(listaFichas || [fichas])
+              }
+        }
 
         fetchPdfs()
     }, [])
@@ -52,13 +56,27 @@ const GaleriaFichas = () => {
             ))}
             </div>
             <div className={styles.buttons}>
-                <button className={styles.butto} onClick={goToPreviousPage} disabled={currentPage === 0}>
-                    Anterior
-                </button>
-                <button className={styles.butto} onClick={goToNextPage} disabled={endIndex >= pdfs.length || 0}>
-                    Próxima
-                </button>
-            </div>
+                {pdfs.length > 0 ? (
+                    <>
+                    <button
+                        className={styles.butto}
+                        onClick={goToPreviousPage}
+                        disabled={currentPage === 0}
+                    >
+                        Anterior
+                    </button>
+                    <button
+                        className={styles.butto}
+                        onClick={goToNextPage}
+                        disabled={endIndex >= pdfs.length || 0}
+                    >
+                        Próxima
+                    </button>
+                    </>
+                ) : (
+                    <p>Nenhuma ficha encontrada, tente recarregar a página!</p>
+                )}
+                </div>
         </div>
     )
 }

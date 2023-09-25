@@ -26,17 +26,32 @@ export const useRetrieveDatabase = () => {
 
             if (userDocSnapshot.exists()) {
                 setUser(userDocSnapshot.data())
-                const sheetsQuery = query(collection(db, 'fichas'), where('Idcriador', '==', userId));
-                const sheetsQuerySnapshot = await getDocs(sheetsQuery);
-
-                const userSheets = sheetsQuerySnapshot.docs.map((doc) => doc.data());
-                setList(userSheets);
             } else {
                 console.log('Usuario não encontrado')
             }
         
         } catch (error) {
             console.log('Erro ao buscar usuário: ' + error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    //pegar catalogo
+    const getUserSheets = async (userId) => {
+        checkIfIsCancelled()
+        setLoading(true)
+
+        try {
+            const sheetsQuery = query(collection(db, 'fichas'), where('Idcriador', '==', userId));
+            const sheetsQuerySnapshot = await getDocs(sheetsQuery);
+
+            const userSheets = sheetsQuerySnapshot.docs.map((doc) => doc.data());
+            setList(userSheets);
+        
+        } catch (error) {
+            console.log('Erro: ' + error)
+            return []
         } finally {
             setLoading(false)
         }
@@ -105,6 +120,7 @@ export const useRetrieveDatabase = () => {
         retrieveUser,
         getInfo,
         getSheets,
+        getUserSheets,
         sheet,
         list
     }

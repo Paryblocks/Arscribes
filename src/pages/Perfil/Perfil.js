@@ -1,8 +1,9 @@
 import styles from './Perfil.module.css'
+import GaleriaFichas from '../../components/GaleriaFichas'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useAuthentication } from '../../hooks/useAuthentication'
 import { useRetrieveDatabase } from '../../hooks/useRetrieveDatabase'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 
 const Perfil = () => {
@@ -11,11 +12,16 @@ const Perfil = () => {
   const userId = queryParams.get('id');
 
   const { auth } = useAuthentication() 
-  const { retrieveUser, user } = useRetrieveDatabase()
+  const [ dadosCarregados, setDadosCarregados ] = useState(false);
+  const { retrieveUser, getUserSheets, user, list } = useRetrieveDatabase()
 
   useEffect(() => {
-    retrieveUser(userId)
-  }, [])
+    retrieveUser(userId).then(
+      getUserSheets(userId).then(
+        setDadosCarregados(true)
+      )
+    )
+  }, [dadosCarregados])
   
   if(!user) {
     return <p>Carregando...</p>
@@ -37,9 +43,10 @@ const Perfil = () => {
             <h3>Sistemas Favoritos: {user.sistemas ? (user.sistemas.length > 1 ? user.sistemas.join(', ') : user.sistemas) : 'Não especificado'}</h3>           
             <h3>Data de Registro: {user.registro && format(new Date(user.registro), 'dd/MM/yyyy')}</h3>
             <br></br>
-            <h2>Criações de {user.displayName}</h2>                   
+            <h2>Criações de {user.displayName}</h2>
+            <hr></hr>
+            <GaleriaFichas fichas={list}/>                   
         </div>
-        <hr></hr>
     </div>
   )
 }
