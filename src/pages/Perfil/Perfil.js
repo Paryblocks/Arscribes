@@ -12,16 +12,13 @@ const Perfil = () => {
   const userId = queryParams.get('id');
 
   const { auth } = useAuthentication() 
-  const [ dadosCarregados, setDadosCarregados ] = useState(false);
   const { retrieveUser, getUserSheets, user, list } = useRetrieveDatabase()
 
   useEffect(() => {
     retrieveUser(userId).then(
-      getUserSheets(userId).then(
-        setDadosCarregados(true)
-      )
+      getUserSheets(userId)
     )
-  }, [dadosCarregados])
+  }, [])
   
   if(!user) {
     return <div className={styles.load}>

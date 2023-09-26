@@ -4,8 +4,8 @@ import { collection, query, where, getDoc, getDocs, doc } from "firebase/firesto
 
 export const useRetrieveDatabase = () => {
     const [sheet, setSheet] = useState(null)
-    const [list, setList] = useState([])
     const [user, setUser] = useState(null)
+    const [list, setList] = useState([])
     const [loading, setLoading] = useState(true)
     const [cancelled, setCancelled] = useState(false)
 
@@ -45,9 +45,10 @@ export const useRetrieveDatabase = () => {
         try {
             const sheetsQuery = query(collection(db, 'fichas'), where('Idcriador', '==', userId));
             const sheetsQuerySnapshot = await getDocs(sheetsQuery);
-
-            const userSheets = sheetsQuerySnapshot.docs.map((doc) => doc.data());
-            setList(userSheets);
+            const userSheets = sheetsQuerySnapshot.docs.map((doc) => {
+                return { id: doc.id, ...doc.data() }
+              })
+            setList(userSheets)
         
         } catch (error) {
             console.log('Erro: ' + error)
@@ -65,7 +66,6 @@ export const useRetrieveDatabase = () => {
         try {
             const sheetsRef = collection(db, 'fichas')
             const querySnapshot = await getDocs(sheetsRef)
-
             const newData = querySnapshot.docs.map((doc) => {
                 return { id: doc.id, ...doc.data() }
               })
