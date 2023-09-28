@@ -1,9 +1,10 @@
 import styles from './Biblioteca.module.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { useRetrieveDatabase } from '../../hooks/useRetrieveDatabase'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { NavLink } from "react-router-dom"
+import { useSheet } from '../../hooks/useSheet';
 
 const FichaAcervo = () => {
   const location = useLocation();
@@ -11,10 +12,17 @@ const FichaAcervo = () => {
   const itemId = queryParams.get('id');
 
   const { getInfo, sheet } = useRetrieveDatabase()
+  const [botaoDesabilitado, setBotaoDesabilitado] = useState(false)
+  const { addSheet } = useSheet()
 
-  function handleGetInfo (){
+  function handleGetInfo(){
     return getInfo(itemId)
   };
+
+  function handleClick(){
+    setBotaoDesabilitado(true)
+    addSheet(sheet.sheetURL)
+  }
 
   useEffect(() => {
     handleGetInfo()
@@ -44,7 +52,7 @@ const FichaAcervo = () => {
           <h3>Postado por: <NavLink to={`/profile?id=${sheet.Idcriador}`}>{sheet.NomeCriador}</NavLink></h3>
         </div>
         <div className={styles.bottom}>
-            <button className={styles.butto}>Adicionar</button>
+            {botaoDesabilitado == false ? (<button className={styles.butto} onClick={handleClick}>Adicionar</button>) : (<button className={styles.butto} disabled>Adicionado com sucesso!</button>)}
             <a href={sheet.sheetURL} download={`${sheet.nome}.pdf`} className={styles.download}>Download</a>
             <h3></h3>
         </div>

@@ -56,12 +56,33 @@ export const useSheet = () => {
         }
     }
 
+    //adicionar ficha na coleção
+    const addSheet = async (data) => {
+        checkIfIsCancelled()
+        setLoading(true)
+
+        try{
+            const usuariosCollectionRef = collection(db, "usuarios")
+            const userDocRef = doc(usuariosCollectionRef, auth.currentUser.uid)
+
+            const userDoc = await getDoc(userDocRef)
+            const colecao = userDoc.data().colecao || []  
+            colecao.push(data)
+            await updateDoc(userDocRef, { colecao })
+        } catch(error) {
+            console.log('Erro: ' + error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
 
     return {
         postSheet,
+        addSheet,
         loading
     }
 }

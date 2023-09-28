@@ -51,6 +51,7 @@ export const useAuthentication = () => {
                 bio: null,
                 sistemas: null,
                 fichasCriadas: null,
+                colecao: null,
                 personagensCriados: null,
                 registro: user.metadata.creationTime
             });
