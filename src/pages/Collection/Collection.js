@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from "./Collection.module.css"
 import Modal from "../../components/ModalColec";
+import { useAuthentication } from '../../hooks/useAuthentication';
+import { useRetrieveDatabase } from '../../hooks/useRetrieveDatabase';
 
 const Collection = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [fichas, setFichas] = useState([]);
+  const { getCollection, colecao } = useRetrieveDatabase()
+  const { auth } = useAuthentication()
 
   const handleOpenModal = () => {
-    setModalIsOpen(true);
-  };
+    setModalIsOpen(true)
+  }
 
   const handleCloseModal = () => {
-    setModalIsOpen(false);
-  };
+    setModalIsOpen(false)
+  }
+
+  useEffect(() => {
+    getCollection(auth.currentUser.uid)
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -22,7 +29,7 @@ const Collection = () => {
         </div>
         <div className={styles.box}>
           <button className={styles.big} onClick={handleOpenModal}>Criar nova coleção</button>
-          <Modal isOpen={modalIsOpen} onClose={handleCloseModal} fichas={fichas} />
+          <Modal isOpen={modalIsOpen} onClose={handleCloseModal} fichas={colecao} />
         </div>
         <div className={styles.box}>
           

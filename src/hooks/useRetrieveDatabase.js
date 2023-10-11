@@ -6,6 +6,7 @@ export const useRetrieveDatabase = () => {
     const [sheet, setSheet] = useState(null)
     const [user, setUser] = useState(null)
     const [list, setList] = useState([])
+    const [colecao, setColecao] = useState([])
     const [loading, setLoading] = useState(true)
     const [cancelled, setCancelled] = useState(false)
 
@@ -37,7 +38,7 @@ export const useRetrieveDatabase = () => {
         }
     }
 
-    //pegar catalogo
+    //pegar fichas do perfil
     const getUserSheets = async (userId) => {
         checkIfIsCancelled()
         setLoading(true)
@@ -80,6 +81,53 @@ export const useRetrieveDatabase = () => {
         }
     }
 
+    //pegar coleção
+    const getCollection = async (userId) => {
+        checkIfIsCancelled()
+        setLoading(true)
+      
+        try {
+          const userDocRef = doc(db, 'usuarios', userId)
+          const userDocSnapshot = await getDoc(userDocRef)
+      
+          if (!userDocSnapshot.exists()) {
+            console.log('Usuário não encontrado')
+            return []
+          }
+      
+          const { fichasCriadas, colecao } = userDocSnapshot.data()
+      
+          if (!fichasCriadas && !colecao) {
+
+            console.log('Nenhum URL encontrado')
+            return []
+          }
+      
+          const todosOsUrls = []
+          if (fichasCriadas) {
+            todosOsUrls.push(...fichasCriadas)
+          }
+          if (colecao) {
+            todosOsUrls.push(...colecao)
+          }
+
+          console.log('todosOsUrls:', todosOsUrls);
+
+      
+          const userCollectionQuery =  query(collection(db, 'fichas'), where('sheetURL', 'in', todosOsUrls))
+          const collectionQuerySnapshot = await getDocs(userCollectionQuery);
+            const userCollection = collectionQuerySnapshot.docs.map((doc) => {
+                return { id: doc.id, ...doc.data() }
+            })
+          setColecao(userCollection)
+        } catch (error) {
+          console.log('Erro: ' + error)
+          return []
+        } finally {
+          setLoading(false)
+        }
+      }
+      
     //pegar informações de uma ficha
     const getInfo = async (sheetId) => {
         checkIfIsCancelled()
@@ -121,7 +169,9 @@ export const useRetrieveDatabase = () => {
         getInfo,
         getSheets,
         getUserSheets,
+        getCollection,
         sheet,
-        list
+        list,
+        colecao
     }
 }
