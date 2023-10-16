@@ -111,8 +111,6 @@ export const useRetrieveDatabase = () => {
             todosOsUrls.push(...colecao)
           }
 
-          console.log('todosOsUrls:', todosOsUrls);
-
       
           const userCollectionQuery =  query(collection(db, 'fichas'), where('sheetURL', 'in', todosOsUrls))
           const collectionQuerySnapshot = await getDocs(userCollectionQuery);

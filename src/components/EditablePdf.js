@@ -1,14 +1,13 @@
-import { Document, Page} from 'react-pdf';
-import { useState, useEffect } from 'react';
+import { Template, generate } from '@pdfme/generator'
+import { Designer, Form, Viewer } from '@pdfme/ui'
 
-const EditablePDFViewer = ({ pdfData }) => {
+const EditablePDFViewer = () => {
+
   return (
     <div>
-      <Document src={pdfData}>
-        <Page pageNumber={1}/>
-      </Document>
+        <p><strong>BALLS?????!!!!!!</strong></p>
     </div>
-  );
-};
+  )
+}
 
-export default EditablePDFViewer;
+export default EditablePDFViewer

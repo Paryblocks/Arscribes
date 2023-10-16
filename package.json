@@ -5,6 +5,9 @@
   "dependencies": {
     "@firebase/rules-unit-testing": "^3.0.0",
     "@firebase/testing": "^0.20.11",
+    "@pdfme/common": "^2.2.1",
+    "@pdfme/generator": "^2.2.1",
+    "@pdfme/ui": "^2.2.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/react-hooks": "^8.0.1",
