@@ -5,7 +5,7 @@ const CriarFicha = () => {
   return (
     <div className={styles.container}>
         <div className={styles.box}>
-          <NavLink className={styles.option}>
+          <NavLink className={styles.option} to={'/create/new'}>
             <h2>Criar modelo do zero</h2>
             <hr></hr>
             <p>Crie e edite campos do seu jeito</p>
