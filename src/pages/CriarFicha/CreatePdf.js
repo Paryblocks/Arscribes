@@ -3,7 +3,7 @@ import EditablePDF from '../../components/EditablePdf'
 
 const CreatePdf = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container2}>
         <EditablePDF></EditablePDF>
     </div>
   )

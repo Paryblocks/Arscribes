@@ -2,6 +2,10 @@
     height: 90vh;
 }
 
+.container2 {
+    height: 80vh;
+}
+
 .box {
     display: flex;
     text-align: center;

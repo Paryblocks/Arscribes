@@ -1,12 +1,23 @@
-import { Template, generate } from '@pdfme/generator'
-import { Designer, Form, Viewer } from '@pdfme/ui'
+import { Designer } from '@pdfme/ui'
+import { BLANK_PDF } from '@pdfme/generator'
+import { useEffect } from 'react'
+import styles from "./EditablePdf.module.css"
 
 const EditablePDFViewer = () => {
 
+  useEffect(() => {
+    const domContainer = document.getElementById('editor')
+
+    const template = {
+      "schemas": [],
+      "basePdf": BLANK_PDF
+    }
+
+    const designer = new Designer({ domContainer, template })
+  }, [])
+
   return (
-    <div>
-        <p><strong>BALLS?????!!!!!!</strong></p>
-    </div>
+    <div id='editor' className={styles.ajeitar}></div>
   )
 }
 
