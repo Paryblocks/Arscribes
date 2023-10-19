@@ -1,5 +1,5 @@
 .container {
-    height: 200vh;
+    height: 140vh;
     background-color: aliceblue;
 }
 
@@ -36,7 +36,7 @@
 
 .button {
     margin-top: 5vh;
-    margin-left: 8vh;
+    margin-left: 7.5vh;
 }
 
 .load {

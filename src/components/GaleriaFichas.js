@@ -45,7 +45,7 @@ const GaleriaFichas = ({fichas}) => {
                   <NavLink to={`/library/sheet?id=${pdf.id}`} key={pdf.id}>
                     <div key={pdf.id} className={styles.pdf}>
                         <span>{pdf.nome}</span>
-                       
+                        <iframe src={pdf.sheetURL} className={styles.viewer}></iframe>
                     </div>
                 </NavLink>
             ))}

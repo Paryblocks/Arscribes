@@ -38,7 +38,6 @@ const Cadastro = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.espaco}></div>
         <form onSubmit={handleSubmit} className={styles.form}>
           <h2 className={styles.nome}>Cadastrar</h2>
             <div>

@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { useRetrieveDatabase } from '../../hooks/useRetrieveDatabase'
 import { NavLink } from "react-router-dom"
 import { useSheet } from '../../hooks/useSheet';
-import { Viewer } from "@pdfme/ui"
 
 const FichaAcervo = () => {
   const location = useLocation();
@@ -26,9 +25,6 @@ const FichaAcervo = () => {
 
   useEffect(() => {
     handleGetInfo()
-    const domContainer = document.getElementById('pdfViewer');
-    const template = {"basePdf": mudar}
-    const viewer = new Viewer({ domContainer, template });
   }, [])
   
   if(!sheet) {
@@ -45,7 +41,7 @@ const FichaAcervo = () => {
         </div>
         <div className={styles.box3}>
           <div className={styles.desc}>{sheet.descricao}</div>
-          <div id='pdfViewer' className={styles.pdf}></div>
+          <iframe src={sheet.sheetURL} className={styles.pdf}></iframe>
         </div>
         <div className={styles.box2}>
           <h3>Postado por: <NavLink to={`/profile?id=${sheet.Idcriador}`}>{sheet.NomeCriador}</NavLink></h3>

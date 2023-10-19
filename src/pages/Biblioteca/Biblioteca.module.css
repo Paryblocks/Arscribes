@@ -1,5 +1,5 @@
 .container {
-    height: 90vh;
+    height: 80vh;
     background-color: aliceblue;
 }
 
@@ -39,23 +39,35 @@
 }
 
 .butto{
-    height: 40px;
+    height: 5vh;
     width: 75vh;
+    font-size: 15px;
 }
 
 .download{
     background-color: rgb(61, 66, 77);
     color: aliceblue;
-    padding: 1px;
+    padding: 4px;
     border-radius: 4px;
-    height: 40px;
+    height: 3vh;
     width: 75vh;
     font-size: 15px;
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 1px solid;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 1vh;
 }
+
+.download:hover {
+    background-color: rgb(4, 22, 70); 
+  }
 
 .pdf {
     display: inline-block;
-    width: 800px;
+    width: 80vh;
     height: 40vh;
     overflow: hidden;
 }

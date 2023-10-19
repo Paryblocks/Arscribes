@@ -1,8 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url('./images/Placeholder.png');
-  background-image: url('./images/Placeholder.png');
+  background-image: url('./images/Background.jpg');
   background-size: cover;
   font-family: "Montserrat", sans-serif;
 }
@@ -33,4 +32,9 @@ button {
   color: aliceblue;
   padding: 4px;
   border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(4, 22, 70); 
 }
