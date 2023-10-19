@@ -19,6 +19,7 @@
     background-color: #f5f5f5;
     border: 1px solid #ccc; 
     border-radius: 4px; 
+    box-shadow: 5px 0px 5px;
 }
 
 .title {

@@ -70,7 +70,6 @@ const Editar = () => {
                 <h2>Sobre:</h2>
                 <textarea className={styles.bio} required placeholder='Um pouco sobre você..' onChange={(e) => setBio(e.target.value)} value={bio}></textarea>
                 <br></br>
-                <br></br>
                 {!loading && <button>Confirmar</button>}
                 {loading && <button disabled>Aguarde...</button>}
             </form>                  
