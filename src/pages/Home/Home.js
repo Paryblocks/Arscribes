@@ -9,10 +9,10 @@ const Home = () => {
         </div>
         <div className={styles.box}>
           <h2>O que é o Arscribes?</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>O Arscribes é uma plataforma dedicada a criar, armazenar e compartilhar fichas de RPGs diversos. Sinta-se livre para escolher qualquer fichas e gerar diversos personagens a partir delas, caso nenhuma pegue seu interesse, use nossa ferramenta para postar um novo formato ou até criar sua própria! Nosso objetivo é tornar mais acessivel o acesso aos diferentes tipos de RPGs além de permitir a criação de novos formatos.</p>
           
           <h2>O que há de novo?</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>Finalmente inaugurando a plataforma com a nova ferramenta de criação. Usuários registrados poderão postar modelos personalizados, vindo de uma base ou criando zero! Todas as fichas criadas dessa forma já serão compativeis com a criação de personagens em suas coleções. Então vamos lá criadores, mãos à obra!</p>
         </div>
     </div>
   )
