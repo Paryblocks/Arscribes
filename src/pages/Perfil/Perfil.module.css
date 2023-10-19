@@ -1,5 +1,6 @@
 .container {
     height: 140vh;
+    min-height: 1200px;
     background-color: aliceblue;
 }
 
