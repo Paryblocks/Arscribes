@@ -17,7 +17,12 @@ const EditablePDFViewer = () => {
   }, [])
 
   return (
-    <div id='editor' className={styles.ajeitar}></div>
+    <div id='editor' className={styles.ajeitar}>
+      <div className={styles.buttonBox}>
+          <button className={styles.options}>Mudar PDF base</button>
+          <button className={styles.options}>Salvar modelo</button>
+        </div>
+    </div>
   )
 }
 
