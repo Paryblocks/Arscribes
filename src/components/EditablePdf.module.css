@@ -16,8 +16,24 @@
     height: 5vh;
     background-color: aliceblue;
     color: black;
+    font-size: medium;
+}
+
+.optionsLabel{
+    height: 4vh;
+    background-color: aliceblue;
+    color: black;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: medium;  
+    cursor: pointer;
 }
 
 .options:hover{
     color: aliceblue;
+}
+
+.optionsLabel:hover{
+    color: aliceblue;
+    background-color: rgb(4, 22, 70); 
 }

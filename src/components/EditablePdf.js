@@ -1,9 +1,23 @@
-import { Designer } from '@pdfme/ui'
+import { Designer} from '@pdfme/ui'
 import { BLANK_PDF } from '@pdfme/generator'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import styles from "./EditablePdf.module.css"
 
 const EditablePDFViewer = () => {
+
+  const [modelo, setModelo] = useState({})
+
+  const handleChange = (event) => {
+    const file = event.target.files[0]
+    const template = {
+      "basePdf": file
+    }
+    modelo.updateTemplate(template)
+  }
+
+  const handleSave = () => {
+    
+  }
 
   useEffect(() => {
     const domContainer = document.getElementById('editor')
@@ -13,14 +27,17 @@ const EditablePDFViewer = () => {
       "basePdf": BLANK_PDF
     }
 
-    const designer = new Designer({ domContainer, template })
+    const modelor = new Designer({ domContainer, template })
+    setModelo(modelor)
   }, [])
 
   return (
-    <div id='editor' className={styles.ajeitar}>
+    <div className={styles.ajeitar}>
+      <div id='editor'></div>
       <div className={styles.buttonBox}>
-          <button className={styles.options}>Mudar PDF base</button>
-          <button className={styles.options}>Salvar modelo</button>
+          <label className={styles.optionsLabel} for="actual-btn">Mudar PDF base</label>
+          <input type="file" id="actual-btn" onChange={handleChange} hidden/>
+          <button className={styles.options} onClick={handleSave}>Salvar modelo</button>
         </div>
     </div>
   )
