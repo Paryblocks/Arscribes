@@ -7,12 +7,20 @@ const EditablePDFViewer = () => {
 
   const [modelo, setModelo] = useState({})
 
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
     const file = event.target.files[0]
-    const template = {
-      "basePdf": file
+    var reader = new FileReader()
+    reader.onload = (e) => {
+      const base64Data = e.target.result
+
+      const template = {
+        "schemas": [],
+        "basePdf": base64Data,
+      }
+  
+      modelo.updateTemplate(template)
     }
-    modelo.updateTemplate(template)
+    reader.readAsDataURL(file)
   }
 
   const handleSave = () => {
@@ -35,8 +43,8 @@ const EditablePDFViewer = () => {
     <div className={styles.ajeitar}>
       <div id='editor'></div>
       <div className={styles.buttonBox}>
-          <label className={styles.optionsLabel} for="actual-btn">Mudar PDF base</label>
-          <input type="file" id="actual-btn" onChange={handleChange} hidden/>
+          <label className={styles.optionsLabel} htmlFor="actual-btn">Mudar PDF base</label>
+          <input type="file" id="actual-btn" onChange={handleChange} accept='application/pdf' hidden/>
           <button className={styles.options} onClick={handleSave}>Salvar modelo</button>
         </div>
     </div>
