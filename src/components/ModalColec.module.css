@@ -20,4 +20,33 @@
   button {
     margin-top: 10px;
   }
+
+  .label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    margin-top: 1vh;
+    width: 80vh;
+    margin-bottom: 5vh;
+}
+
+.inputD {
+    margin-top: 1vh;
+    width: 80vh;
+    margin-bottom: 5vh;
+    height: 20vh;
+}
+
+.inpuF {
+    margin-top: 1vh;
+    margin-bottom: 5vh;
+}
+
+.tit {
+    position: relative;
+    right: 35vh;
+}
   

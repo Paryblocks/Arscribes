@@ -44,6 +44,8 @@ export const useSheet = () => {
                 nome: data.nome,
                 descricao: data.descricao,
                 sistema: data.sistema,
+                template: data.templ,
+                tipo: data.type,
                 sheetURL: sheetURL,
                 Idcriador: auth.currentUser.uid,
                 NomeCriador: auth.currentUser.displayName
