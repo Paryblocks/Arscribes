@@ -33,7 +33,7 @@ const Editar = () => {
     }
 
     const res = await editUser(updatedUser)
-    navigate('/profile')
+    navigate(`/profile?id=${auth.currentUser.uid}`)
   }
 
   useEffect(() => {
