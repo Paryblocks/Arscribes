@@ -1,4 +1,4 @@
-import styles from './ModalColec.module.css'; 
+import styles from './Modal.module.css'; 
 import { useSheet } from '../hooks/useSheet'
 import { useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'

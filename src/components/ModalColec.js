@@ -1,7 +1,12 @@
 import React from 'react';
-import styles from './ModalColec.module.css'; 
+import styles from './Modal.module.css'; 
 
-const Modal = ({ isOpen, onClose, fichas }) => {
+const Modal = ({ isOpen, onClose, fichas, choice }) => {
+
+  const handleChoice = (ficha) => {
+    choice(ficha);
+  };
+
   return (
     isOpen && (
       <div className={styles.modal}>
@@ -10,7 +15,7 @@ const Modal = ({ isOpen, onClose, fichas }) => {
           {fichas.length > 0 ? (
             <ul>
               {fichas.map((ficha) => (
-                <li key={ficha.id}>{ficha.nome}</li>
+                <li onClick={() => handleChoice(ficha)} className={styles.option} key={ficha.id}>{ficha.nome}</li>
               ))}
             </ul>
           ) : (

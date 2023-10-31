@@ -24,6 +24,7 @@ import Editar from './pages/Perfil/Editar'
 import Importar from './pages/CriarFicha/Importar'
 import FichaAcervo from './pages/Biblioteca/FichaAcervo';
 import CreatePdf from './pages/CriarFicha/CreatePdf';
+import SheetFolder from './pages/Collection/SheetFolder';
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
             <Route path="/library" element={<Biblioteca/>}/>
             <Route path="/library/sheet" element={<FichaAcervo/>}/>
             <Route path="/collection" element={user ? <Collection/> : <Navigate to="/login"/>}/>
+            <Route path="/collection/folder" element={user ? <SheetFolder/> : <Navigate to="/login"/>}/>
             <Route path="/create" element={user ? <CriarFicha/> : <Navigate to="/login"/>}/>
             <Route path="/create/import" element={user ? <Importar/> : <Navigate to="/login"/>}/>
             <Route path="/create/new" element={user ? <CreatePdf/> : <Navigate to="/login"/>}/>

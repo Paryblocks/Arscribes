@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSheet } from '../hooks/useSheet'
 import { NavLink } from "react-router-dom"
+import icon from '../images/FolderIcon.png'
 
 import styles from './GaleriaFichas.module.css'
 
@@ -8,21 +9,21 @@ const GaleriaColec = () => {
     const [folder, setFolder] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
     const galleryRef = useRef(null)
-    const { getFolders } = useSheet()
+    const { getFolders, loading } = useSheet()
 
     useEffect(() => {
         const fetchPdfs = async () => {
             const listaPastas = await getFolders()
-            setFolder(listaPastas)
+            setFolder(listaPastas || [])
         }
 
         fetchPdfs()
     }, [])
 
-    const fichasPerPage = 4
-    const startIndex = currentPage * fichasPerPage
-    const endIndex = startIndex + fichasPerPage
-    const currentPdfs = folder.slice(startIndex, endIndex)
+    const foldersPerPage = 4
+    const startIndex = currentPage * foldersPerPage
+    const endIndex = startIndex + foldersPerPage
+    const currentFolder = folder.slice(startIndex, endIndex)
 
     const goToNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1)
@@ -37,17 +38,17 @@ const GaleriaColec = () => {
     return (
         <div>
             <div ref={galleryRef} className={styles.container}>
-            {currentPdfs.map((pdf) => (
-                  <NavLink to={`/library/sheet?id=${pdf.id}`} key={pdf.id}>
-                    <div key={pdf.id} className={styles.pdf}>
-                        <span>{pdf.nome}</span>
-                        <iframe src={pdf.sheetURL} className={styles.viewer}></iframe>
+            {currentFolder.map((colec) => (
+                  <NavLink to={`/collection/folder?id=${colec.id}`} key={colec.id}>
+                    <div key={colec.id} className={styles.pdf}>
+                        <span>{colec.nome}</span>
+                        <imgs rc={icon} alt="Icone da pasta"/>
                     </div>
                 </NavLink>
             ))}
             </div>
             <div className={styles.buttons}>
-                {pdfs.length > 0 ? (
+                {folder.length > 0 ? (
                     <>
                     <button
                         className={styles.butto}
@@ -59,7 +60,7 @@ const GaleriaColec = () => {
                     <button
                         className={styles.butto}
                         onClick={goToNextPage}
-                        disabled={endIndex >= pdfs.length || 0}
+                        disabled={endIndex >= folder.length || 0}
                     >
                         Próxima
                     </button>

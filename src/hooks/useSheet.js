@@ -1,6 +1,6 @@
 import { db, storage } from '../firebase/config'
 import { useState, useEffect } from 'react'
-import { collection, updateDoc, setDoc, getDoc, doc } from 'firebase/firestore'
+import { collection, updateDoc, setDoc, getDoc, doc, query, where, getDocs } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { getAuth } from 'firebase/auth'
 import { v4 } from 'uuid'
@@ -9,6 +9,7 @@ import { v4 } from 'uuid'
 export const useSheet = () => {
     const [loading, setLoading] = useState(null)
     const [cancelled, setCancelled] = useState(false)
+    const [folders, setFolders] = useState(null)
     
     const auth = getAuth()
 
@@ -78,6 +79,28 @@ export const useSheet = () => {
         }
     }
 
+    //pegar pastas
+    const getFolders = async () => {
+        checkIfIsCancelled()
+        setLoading(true)
+
+        try {
+            const sheetsQuery = query(collection(db, 'pastas'), where('Idcriador', '==', auth.currentUser.uid));
+            const sheetsQuerySnapshot = await getDocs(sheetsQuery);
+            const userSheets = sheetsQuerySnapshot.docs.map((doc) => {
+                return { id: doc.id, ...doc.data() }
+              })
+            setFolders(userSheets)
+        
+        } catch (error) {
+            console.log('Erro: ' + error)
+            return []
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
@@ -85,6 +108,8 @@ export const useSheet = () => {
     return {
         postSheet,
         addSheet,
+        getFolders,
+        folders,
         loading
     }
 }
