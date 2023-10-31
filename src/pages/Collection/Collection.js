@@ -46,9 +46,7 @@ const Collection = () => {
           <Modal isOpen={modalIsOpen} onClose={handleCloseModal} fichas={colecao} choice={handleChoice}/>
           <ModalConfirm isOpen={confirmIsOpen} goBack={handleGoBack} selectedOption={selectedOption}/>
         </div>
-        <div className={styles.box}>
           <GaleriaColec></GaleriaColec>
-        </div>
     </div>
   )
 }

@@ -6,24 +6,24 @@ import icon from '../images/FolderIcon.png'
 import styles from './GaleriaFichas.module.css'
 
 const GaleriaColec = () => { 
-    const [folder, setFolder] = useState([])
+    const [folds, setFolds] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
     const galleryRef = useRef(null)
-    const { getFolders, loading } = useSheet()
+    const { getFolders } = useSheet()
 
     useEffect(() => {
-        const fetchPdfs = async () => {
+        const fetchFold = async () => {
             const listaPastas = await getFolders()
-            setFolder(listaPastas || [])
+            setFolds(listaPastas || [])
         }
 
-        fetchPdfs()
+        fetchFold()
     }, [])
 
     const foldersPerPage = 4
     const startIndex = currentPage * foldersPerPage
     const endIndex = startIndex + foldersPerPage
-    const currentFolder = folder.slice(startIndex, endIndex)
+    const currentFolder = folds.slice(startIndex, endIndex)
 
     const goToNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1)
@@ -38,17 +38,17 @@ const GaleriaColec = () => {
     return (
         <div>
             <div ref={galleryRef} className={styles.container}>
-            {currentFolder.map((colec) => (
-                  <NavLink to={`/collection/folder?id=${colec.id}`} key={colec.id}>
-                    <div key={colec.id} className={styles.pdf}>
-                        <span>{colec.nome}</span>
-                        <imgs rc={icon} alt="Icone da pasta"/>
+            {currentFolder.map((fold) => (
+                  <NavLink to={`/collection/folder?id=${fold.id}`} key={fold.id}>
+                    <div key={fold.id} className={styles.folder}>
+                        <span>{fold.nome}</span>
+                        <img src={icon} alt="Icone da pasta" className={styles.imager}/>
                     </div>
                 </NavLink>
             ))}
             </div>
             <div className={styles.buttons}>
-                {folder.length > 0 ? (
+                {folds.length > 0 ? (
                     <>
                     <button
                         className={styles.butto}
@@ -60,7 +60,7 @@ const GaleriaColec = () => {
                     <button
                         className={styles.butto}
                         onClick={goToNextPage}
-                        disabled={endIndex >= folder.length || 0}
+                        disabled={endIndex >= folds.length || 0}
                     >
                         Próxima
                     </button>

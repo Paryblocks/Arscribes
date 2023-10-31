@@ -1,21 +1,26 @@
-import { useState } from 'react';
-import styles from './Modal.module.css'; 
+import { useState } from 'react'
+import { useSheet } from '../hooks/useSheet'
+import styles from './Modal.module.css' 
 
-const Modal = ({ isOpen, selectedOption, goBack }) => {
+const Modal = ({ isOpen, selectedOption, goBack}) => {
 
   const [nome, setNome] = useState("")
-  const [id, setId] = useState("")
+  const { postCollection, loading } = useSheet()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     const ficha = {
       nome,
-      id: selectedOption.id 
+      sistema: selectedOption.sistema,
+      template: selectedOption.template,
+      tipo: selectedOption.tipo,
+      sheetURL: selectedOption.sheetURL 
     }
 
-    const res = await postSheet(ficha)
-    navigate('/library')
+    const res = await postCollection(ficha)
+    goBack()
+    window.location.reload();
   }
 
   return (
@@ -24,9 +29,11 @@ const Modal = ({ isOpen, selectedOption, goBack }) => {
         <div className={styles.modalContent}>
           <h2>Confirmar coleção</h2>
             <form onSubmit={handleSubmit}>
-              <label>Ficha selecionada: {selectedOption.nome}</label>
-              <label>Nome da coleção: </label>
-              <input type='text' name="nome" required placeholder='Nome do Modelo' value={nome} onChange={(e) => setNome(e.target.value)}/>
+              <div className={styles.ajeitar}>
+                <label>Ficha selecionada: {selectedOption.nome}</label>
+                <label>Nome da coleção: </label>
+                <input type='text' name="nome" required placeholder='Seu universo?' value={nome} onChange={(e) => setNome(e.target.value)}/>
+              </div>
               <div>
                 {!loading && <button>Criar coleção</button>}
                 {loading && <button disabled>Aguarde...</button>}

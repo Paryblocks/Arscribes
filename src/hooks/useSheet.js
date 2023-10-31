@@ -9,7 +9,6 @@ import { v4 } from 'uuid'
 export const useSheet = () => {
     const [loading, setLoading] = useState(null)
     const [cancelled, setCancelled] = useState(false)
-    const [folders, setFolders] = useState(null)
     
     const auth = getAuth()
 
@@ -90,7 +89,7 @@ export const useSheet = () => {
             const userSheets = sheetsQuerySnapshot.docs.map((doc) => {
                 return { id: doc.id, ...doc.data() }
               })
-            setFolders(userSheets)
+            return userSheets
         
         } catch (error) {
             console.log('Erro: ' + error)
@@ -100,6 +99,38 @@ export const useSheet = () => {
         }
     }
 
+    //registrar coleção
+    const postCollection = async (data) => {
+        checkIfIsCancelled()
+        setLoading(true)
+
+        try{
+            const sheetsCollectionRef = collection(db, "pastas");
+            const sheetDocRef = doc(sheetsCollectionRef);
+          
+            const dataToInsert = {
+              nome: data.nome,
+              sistema: data.sistema,
+              sheetURL: data.sheetURL,
+              Idcriador: auth.currentUser.uid,
+            };
+          
+            if (data.template) {
+              dataToInsert.template = data.template;
+            }
+          
+            if (data.tipo) {
+              dataToInsert.tipo = data.tipo;
+            }
+          
+            await setDoc(sheetDocRef, dataToInsert);
+
+        }catch(error){
+            console.log('Erro: ' + error)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
         return () => setCancelled(true)
@@ -109,7 +140,7 @@ export const useSheet = () => {
         postSheet,
         addSheet,
         getFolders,
-        folders,
+        postCollection,
         loading
     }
 }

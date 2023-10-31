@@ -52,4 +52,10 @@
 
 .option{
   cursor: pointer;
-}  
+  margin-bottom: 10px;
+} 
+
+.ajeitar{
+  display: flex;
+  flex-direction: column;
+}
