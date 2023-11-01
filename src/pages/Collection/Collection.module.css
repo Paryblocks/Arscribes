@@ -12,3 +12,7 @@
 .big {
     padding: 0.6em;
 }
+
+.load {
+    height: 100vh; 
+}

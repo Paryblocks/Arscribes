@@ -9,6 +9,7 @@ import { v4 } from 'uuid'
 export const useSheet = () => {
     const [loading, setLoading] = useState(null)
     const [cancelled, setCancelled] = useState(false)
+    const [folder, setFolder] = useState(null)
     
     const auth = getAuth()
 
@@ -132,6 +133,28 @@ export const useSheet = () => {
         }
     }
 
+    //pegar informação de uma coleção
+    const getContents = async (folderId) => {
+        checkIfIsCancelled()
+        setLoading(true)
+
+        try {
+            const sheetDocRef = doc(collection(db, 'pastas'), folderId)
+            const sheetDocSnapshot = await getDoc(sheetDocRef)
+
+            if (sheetDocSnapshot.exists()) {
+                setFolder(sheetDocSnapshot.data())
+            } else {
+                console.log('Ficha não encontrada')
+            }
+        
+        } catch (error) {
+            console.log('Erro: ' + error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
@@ -141,6 +164,8 @@ export const useSheet = () => {
         addSheet,
         getFolders,
         postCollection,
+        getContents,
+        folder,
         loading
     }
 }
