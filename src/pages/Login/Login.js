@@ -2,13 +2,23 @@ import styles from './Login.module.css'
 import { NavLink } from 'react-router-dom'
 import { useAuthentication } from '../../hooks/useAuthentication'
 import { useState, useEffect } from 'react'
+import ModalRecover from '../../components/ModalRecover'
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
   const [error, setError] = useState("")
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   const { login, error: authError, loading } = useAuthentication();
+
+  const handleOpenModal = () => {
+    setModalIsOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setModalIsOpen(false)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -43,7 +53,7 @@ const Login = () => {
                 <input className={styles.input} type="password" name="senha" required placeholder='********' value={senha} onChange={(e) => setSenha(e.target.value)}/>
             </div>
             <div className={styles.alinhar}>
-              <p className={styles.text}>Esqueceu sua senha?</p>
+              <p className={styles.text} onClick={handleOpenModal}>Esqueceu sua senha?</p>
               {!loading && <button className={styles.button}>Entrar</button>}
               {loading && <button disabled className={styles.button}>Aguarde...</button>}
             </div>
@@ -55,6 +65,7 @@ const Login = () => {
             <h3 className={styles.title}>Não tem uma conta?</h3>
           </NavLink>
         </nav>
+        <ModalRecover isOpen={modalIsOpen} onClose={handleCloseModal}/>
     </div>
   )
 }

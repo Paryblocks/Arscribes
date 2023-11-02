@@ -16,9 +16,8 @@ const CreateCharacter = (data) => {
         const domContainer = document.getElementById('ficha')
     
         const template = data.template
-        const input = template.sampledata ?? []
     
-        const forma = new Form({ domContainer, template, inputs })
+        const forma = new Form({ domContainer, template})
       }, [])
 
   return (

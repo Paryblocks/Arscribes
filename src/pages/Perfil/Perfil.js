@@ -18,7 +18,7 @@ const Perfil = () => {
     retrieveUser(userId).then(
       getUserSheets(userId)
     )
-  }, [])
+  }, [userId])
   
   if(!user) {
     return <div className={styles.load}>

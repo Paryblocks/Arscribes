@@ -1,6 +1,6 @@
 import { db, storage } from "../firebase/config"
 
-import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut, signInWithEmailAndPassword} from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut, signInWithEmailAndPassword, sendPasswordResetEmail} from 'firebase/auth'
 import { useState, useEffect } from 'react'
 import { collection, setDoc, doc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
@@ -22,7 +22,6 @@ export const useAuthentication = () => {
     }
 
     //cadastro
-
     const createUser = async (data) => {
         checkIfIsCancelled()
         setLoading(true)
@@ -79,14 +78,12 @@ export const useAuthentication = () => {
     }
 
     //logout
-
     const logout = () => {
         checkIfIsCancelled()
         signOut(auth)
     }
 
     //login
-
     const login = async(data) => {
         checkIfIsCancelled()
         setLoading(true)
@@ -111,7 +108,6 @@ export const useAuthentication = () => {
     }
 
     //editar
-
     const editUser = async (data) => {
         checkIfIsCancelled()
         setLoading(true)
@@ -155,6 +151,23 @@ export const useAuthentication = () => {
         }
     }
 
+    //recuperar senha
+    const recoverPassword = async (data) => {
+        checkIfIsCancelled()
+        setLoading(true)
+        setError(null)
+
+        try{
+            sendPasswordResetEmail(auth, data)
+        }catch(error){
+            let systemErrorMessage
+            systemErrorMessage = "Ocorreu um erro, por favor, tente mais tarde."
+            setError(systemErrorMessage)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
@@ -166,6 +179,7 @@ export const useAuthentication = () => {
         loading,
         logout,
         login,
-        editUser
+        editUser,
+        recoverPassword
     }
 }

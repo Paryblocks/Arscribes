@@ -59,3 +59,23 @@
   display: flex;
   flex-direction: column;
 }
+
+.frame{
+  height: 80vh;
+  width: 80vh;
+}
+
+.frame iframe{
+  height: 100%;
+  width: 100%;
+}
+
+.space{
+  display: flex;
+  gap: 85%;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+}

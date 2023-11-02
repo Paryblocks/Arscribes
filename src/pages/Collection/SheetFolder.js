@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import { useSheet } from '../../hooks/useSheet';
 import styles from './Collection.module.css'
+import ModalChara from '../../components/ModalChara';
 
 const SheetFolder = () => {
   const location = useLocation();
@@ -9,14 +10,21 @@ const SheetFolder = () => {
   const itemId = queryParams.get('id');
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const { getContents, folder, user } = useSheet()
+  const [isCustom, setIsCustom] = useState(false)
+  const { getContents, folder } = useSheet()
 
   function handleGetInfo(){
     return getContents(itemId)
   }
 
   const handleOpenModal = () => {
-    setModalIsOpen(true)
+    if (folder.tipo) {
+      setIsCustom(true)
+      setModalIsOpen(true)
+    } else {
+      setIsCustom(false)
+      setModalIsOpen(true)
+    }
   }
 
   const handleCloseModal = () => {
@@ -42,7 +50,7 @@ const SheetFolder = () => {
           <button className={styles.big} onClick={handleOpenModal}>Adicionar personagem</button>
         </div>
         <div className={styles.box}>
-          
+          <ModalChara isOpen={modalIsOpen} onClose={handleCloseModal} check={isCustom} pdf={folder.sheetURL}/>
         </div>
     </div>
   )

@@ -31,3 +31,7 @@
     align-items: center;
     gap: 8%;
 }
+
+.text{
+    cursor: pointer;
+}
