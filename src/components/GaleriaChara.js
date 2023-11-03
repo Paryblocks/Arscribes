@@ -54,7 +54,7 @@ const GaleriaChara = ({fichas}) => {
                     </button>
                     </>
                 ) : (
-                    <p>Nenhuma personagem encontrado, tente criar um novo!</p>
+                    <p>Nenhum personagem encontrado, tente criar um novo!</p>
                 )}
                 </div>
         </div>

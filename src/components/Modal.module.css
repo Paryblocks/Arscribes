@@ -60,7 +60,7 @@
   flex-direction: column;
 }
 
-.frame{
+.frameCustom{
   height: 80vh;
   width: 80vh;
 }
@@ -83,4 +83,13 @@
 .form{
   display: flex;
   flex-direction: column;
+}
+
+.frameDefault{
+  height: 80vh;
+  width: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

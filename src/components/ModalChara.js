@@ -7,8 +7,13 @@ import { useSheet } from '../hooks/useSheet';
 const ModalChara = ({ isOpen, onClose, check, temp, pdf, pasta }) => {
 
   const [carregado, setCarregado] = useState(false)
+  const [file, setFile] = useState(null)
   const [forma, setForma] = useState({})
   const { saveCharacter } = useSheet()
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0])
+}
 
     const handleSave = async () => {
       if(check){
@@ -20,7 +25,8 @@ const ModalChara = ({ isOpen, onClose, check, temp, pdf, pasta }) => {
           onClose()
         })
       } else {
-        console.log('normal')
+        saveCharacter(pasta, file)
+        onClose()
       }
     }
 
@@ -44,13 +50,19 @@ const ModalChara = ({ isOpen, onClose, check, temp, pdf, pasta }) => {
       <div className={styles.modal}>
         <div className={styles.modalContent}>
           {check ? (
-            <div className={styles.frame}>
+            <div className={styles.frameCustom}>
               {!carregado && <button onClick={carregarForm}>Carregar ficha</button>}
               <div id='save'></div>   
             </div>
           ) : (
-            <div className={styles.frame}>
-                <iframe src={pdf}></iframe>    
+            <div className={styles.frameDefault}>
+              <h2>Registrar personagem</h2>
+              <p>Por enquanto apenas fichas customizadas podem gerar personagens na plataforma!</p>
+              <p>Mas você pode postar os personagens gerados por ela aqui!</p>
+              <label>PDF do Personagem:</label>
+              <input type="file" name="file" required onChange={handleFileChange} accept="application/pdf"/>
+              <br></br>
+              <a href={pdf} download><button>Baixar template da ficha</button></a>   
             </div>
           )}
           <div className={styles.space}>
