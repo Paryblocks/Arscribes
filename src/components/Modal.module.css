@@ -65,7 +65,12 @@
   width: 80vh;
 }
 
-.frame iframe{
+.frame button{
+  margin-top: 50%;
+  margin-left: 43%;
+}
+
+.frame div{
   height: 100%;
   width: 100%;
 }

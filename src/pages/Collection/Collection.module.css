@@ -16,3 +16,11 @@
 .load {
     height: 100vh; 
 }
+
+.sas{
+    margin-top: 5vh;
+    display: flex;
+    padding-left: 2em;
+    text-align: left;
+    flex-direction: column;
+}

@@ -155,6 +155,41 @@ export const useSheet = () => {
         }
     }
 
+    //salva um personagem
+    const saveCharacter = async (id, pdf) => {
+        checkIfIsCancelled()
+        setLoading(true)
+
+        try {
+            const fileName = v4() + '.pdf'
+            const storageRef = ref(storage, 'characters/' + fileName)
+
+            await uploadBytes(storageRef, pdf)
+            const sheetURL = await getDownloadURL(storageRef)
+
+            const usuariosCollectionRef = collection(db, "usuarios")
+            const userDocRef = doc(usuariosCollectionRef, auth.currentUser.uid)
+
+            const userDoc = await getDoc(userDocRef)
+            const personagensCriados = userDoc.data().personagensCriados || []            
+            personagensCriados.push(sheetURL)
+            await updateDoc(userDocRef, { personagensCriados })
+
+            const pastaRef = collection(db, "pastas")
+            const pastaDocRef = doc(pastaRef, id)
+
+            const pastaDoc = await getDoc(pastaDocRef)
+            const personagensPasta = pastaDoc.data().personagensPasta || []            
+            personagensPasta.push(sheetURL)
+            await updateDoc(pastaDocRef, { personagensPasta })
+
+        } catch (error) {
+            console.log('Erro: ' + error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
@@ -165,6 +200,7 @@ export const useSheet = () => {
         getFolders,
         postCollection,
         getContents,
+        saveCharacter,
         folder,
         loading
     }

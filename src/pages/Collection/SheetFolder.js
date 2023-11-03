@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useSheet } from '../../hooks/useSheet';
 import styles from './Collection.module.css'
 import ModalChara from '../../components/ModalChara';
+import GaleriaChara from '../../components/GaleriaChara';
 
 const SheetFolder = () => {
   const location = useLocation();
@@ -29,6 +30,7 @@ const SheetFolder = () => {
 
   const handleCloseModal = () => {
     setModalIsOpen(false)
+    
   }
 
   useEffect(() => {
@@ -49,8 +51,9 @@ const SheetFolder = () => {
         <div className={styles.box}>
           <button className={styles.big} onClick={handleOpenModal}>Adicionar personagem</button>
         </div>
-        <div className={styles.box}>
-          <ModalChara isOpen={modalIsOpen} onClose={handleCloseModal} check={isCustom} pdf={folder.sheetURL}/>
+        <div className={styles.sas}>
+          <GaleriaChara fichas={folder.personagensPasta}/>
+          <ModalChara isOpen={modalIsOpen} onClose={handleCloseModal} check={isCustom} pdf={folder.sheetURL} temp={folder.template} pasta={itemId}/>
         </div>
     </div>
   )
