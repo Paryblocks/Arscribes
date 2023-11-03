@@ -52,7 +52,9 @@ const ModalChara = ({ isOpen, onClose, check, temp, pdf, pasta }) => {
           {check ? (
             <div className={styles.frameCustom}>
               {!carregado && <button onClick={carregarForm}>Carregar ficha</button>}
-              <div id='save'></div>   
+              <div className={styles.teste}>
+                <div id='save'></div>   
+              </div>
             </div>
           ) : (
             <div className={styles.frameDefault}>

@@ -30,8 +30,10 @@ const GaleriaChara = ({fichas}) => {
         <div>
             <div ref={galleryRef} className={styles.container}>
             {currentPdfs.map((pdf) => (
-                    <div className={styles.pdf}>
+                    <div className={styles.kok}>
                         <iframe src={pdf} className={styles.viewer}></iframe>
+                        <a href={pdf} download={`${pdf}.pdf`} className={styles.download}>Baixar</a>
+                        <br></br>
                     </div>
             ))}
             </div>

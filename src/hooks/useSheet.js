@@ -1,7 +1,7 @@
 import { db, storage } from '../firebase/config'
 import { useState, useEffect } from 'react'
-import { collection, updateDoc, setDoc, getDoc, doc, query, where, getDocs } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { collection, updateDoc, setDoc, getDoc, doc, query, where, getDocs, deleteDoc } from 'firebase/firestore'
+import { getDownloadURL, ref, uploadBytes, deleteObject } from 'firebase/storage'
 import { getAuth } from 'firebase/auth'
 import { v4 } from 'uuid'
 
@@ -190,6 +190,57 @@ export const useSheet = () => {
         }
     }
 
+    //deletar coleção
+    const deleteFolder = async (id, pdf) => {
+        checkIfIsCancelled()
+        setLoading(true)
+
+        try {
+            const characterRef = doc(db, 'pastas', id)
+            await deleteDoc(characterRef)
+
+            const pathname = pdf.pathname
+            const pathSegments = pathname.split('/')
+            const fileNameWithToken = pathSegments[pathSegments.length - 1]
+            const fileName = fileNameWithToken.split('?')[0] 
+          
+            const storageRef = ref(storage, `characters/${fileName}`)
+            await deleteObject(storageRef)
+
+            const fieldRef = doc(db, `usuarios/${auth.currentUser.uid}/personagensCriados`);
+            fieldRef.orderByValue().equalTo(pdf).once('value', (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    childSnapshot.ref.remove()
+                })
+            })
+      
+        } catch (error) {
+            console.log('Erro: ' + error)
+        } finally {
+            setLoading(false)
+        }
+      }
+
+    //deletar personagem
+    const deleteChara = async (pdf) => {
+        checkIfIsCancelled()
+        setLoading(true)
+
+        try {
+            const fieldRef = doc(db, `usuarios/${auth.currentUser.uid}/personagensCriados`);
+            fieldRef.orderByValue().equalTo(pdf).once('value', (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    childSnapshot.ref.remove()
+                })
+            })
+      
+        } catch (error) {
+            console.log('Erro: ' + error)
+        } finally {
+            setLoading(false)
+        }
+      }
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
@@ -201,6 +252,8 @@ export const useSheet = () => {
         postCollection,
         getContents,
         saveCharacter,
+        deleteFolder,
+        deleteChara,
         folder,
         loading
     }

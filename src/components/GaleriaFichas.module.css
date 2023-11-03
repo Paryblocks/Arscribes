@@ -33,9 +33,50 @@
     flex-direction: column;
     align-items: center;
     margin-top: 10vh;
-    margin-bottom: 10vh;
+    margin-left: 5vh;
+    margin-right: 5vh;
 }
 
 .imager{
     width: 20vh;
+}
+
+.kok{
+    display: flex;
+    flex-direction: column;
+}
+
+.download{
+    background-color: rgb(61, 66, 77);
+    color: aliceblue;
+    padding: 4px;
+    border-radius: 4px;
+    height: 3vh;
+    font-size: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 1px solid;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 1vh;
+}
+
+.deletar{
+    all: unset;
+    height: 5vh;
+    width: 5vh;
+    margin-bottom: 10vh;
+}
+
+.deletar:hover{
+    all: unset;
+    height: 5vh;
+    width: 5vh;
+    cursor: pointer;
+    margin-bottom: 10vh;
+}
+
+.deletari{
+    height: 100%;
+    width: 100%;
 }
