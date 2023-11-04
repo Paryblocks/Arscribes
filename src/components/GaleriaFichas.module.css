@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 5%;
 }
@@ -79,4 +80,25 @@
 .deletari{
     height: 100%;
     width: 100%;
+}
+
+.menu img{
+    vertical-align: middle;
+}
+
+.deletaru{
+    all: unset;
+    height: 5vh;
+    width: 5vh;
+    margin-bottom: 10vh;
+    margin-left: 33%;
+}
+
+.deletaru:hover{
+    all: unset;
+    height: 5vh;
+    width: 5vh;
+    cursor: pointer;
+    margin-bottom: 10vh;
+    margin-left: 33%;
 }

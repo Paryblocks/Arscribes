@@ -12,8 +12,8 @@ const GaleriaColec = () => {
     const galleryRef = useRef(null)
     const { getFolders, deleteFolder } = useSheet()
 
-    const handleDelete = () => {
-        
+    const handleDelete = (data) => {
+        deleteFolder(data)
     }
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const GaleriaColec = () => {
                         <img src={icon} alt="Icone da pasta" className={styles.imager}/>
                     </div>
                   </NavLink>
-                  <button onClick={handleDelete} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
+                  <button onClick={() => {handleDelete(fold)}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
                 </div>
             ))}
             </div>

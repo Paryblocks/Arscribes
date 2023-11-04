@@ -1,11 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
+import delicon from '../images/Deletebutton.png'
+import { useSheet } from '../hooks/useSheet'
 
 import styles from './GaleriaFichas.module.css'
 
-const GaleriaChara = ({fichas}) => { 
+const GaleriaChara = ({fichas, pasta}) => { 
     const [pdfs, setPdfs] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
+    const { deleteChara } = useSheet()
     const galleryRef = useRef(null)
+
+    const handleDelete = (data) => {
+        deleteChara(pasta, data)
+    }
 
     useEffect(() => {
         setPdfs(fichas)
@@ -32,7 +39,10 @@ const GaleriaChara = ({fichas}) => {
             {currentPdfs.map((pdf) => (
                     <div className={styles.kok}>
                         <iframe src={pdf} className={styles.viewer}></iframe>
-                        <a href={pdf} download={`${pdf}.pdf`} className={styles.download}>Baixar</a>
+                        <div className={styles.menu}>
+                            <a href={pdf} download={`${pdf}.pdf`} className={styles.download}>Baixar</a>
+                            <button onClick={() => {handleDelete(pdf)}} className={styles.deletaru}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
+                        </div>
                         <br></br>
                     </div>
             ))}

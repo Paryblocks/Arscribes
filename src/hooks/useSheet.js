@@ -1,6 +1,6 @@
 import { db, storage } from '../firebase/config'
 import { useState, useEffect } from 'react'
-import { collection, updateDoc, setDoc, getDoc, doc, query, where, getDocs, deleteDoc } from 'firebase/firestore'
+import { collection, updateDoc, setDoc, getDoc, doc, query, where, getDocs, deleteDoc, arrayRemove } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes, deleteObject } from 'firebase/storage'
 import { getAuth } from 'firebase/auth'
 import { v4 } from 'uuid'
@@ -191,28 +191,20 @@ export const useSheet = () => {
     }
 
     //deletar coleção
-    const deleteFolder = async (id, pdf) => {
+    const deleteFolder = async (data) => {
         checkIfIsCancelled()
         setLoading(true)
 
         try {
-            const characterRef = doc(db, 'pastas', id)
+            const characterRef = doc(db, 'pastas', data.id)
             await deleteDoc(characterRef)
 
-            const pathname = pdf.pathname
-            const pathSegments = pathname.split('/')
-            const fileNameWithToken = pathSegments[pathSegments.length - 1]
-            const fileName = fileNameWithToken.split('?')[0] 
-          
-            const storageRef = ref(storage, `characters/${fileName}`)
-            await deleteObject(storageRef)
-
-            const fieldRef = doc(db, `usuarios/${auth.currentUser.uid}/personagensCriados`);
-            fieldRef.orderByValue().equalTo(pdf).once('value', (snapshot) => {
-                snapshot.forEach((childSnapshot) => {
-                    childSnapshot.ref.remove()
+            const docRef = doc(db, 'usuarios', auth.currentUser.uid)
+            data.personagensPasta.forEach(async (personagem) => {
+                await updateDoc(docRef, {
+                  personagensCriados: arrayRemove(personagem)
                 })
-            })
+              })
       
         } catch (error) {
             console.log('Erro: ' + error)
@@ -222,18 +214,20 @@ export const useSheet = () => {
       }
 
     //deletar personagem
-    const deleteChara = async (pdf) => {
+    const deleteChara = async (id, pdf) => {
         checkIfIsCancelled()
         setLoading(true)
 
         try {
-            const fieldRef = doc(db, `usuarios/${auth.currentUser.uid}/personagensCriados`);
-            fieldRef.orderByValue().equalTo(pdf).once('value', (snapshot) => {
-                snapshot.forEach((childSnapshot) => {
-                    childSnapshot.ref.remove()
-                })
+            const doc2Ref = doc(db, 'pastas', id)
+            await updateDoc(doc2Ref, {
+                personagensPasta: arrayRemove(pdf)
             })
-      
+
+            const docRef = doc(db, 'usuarios', auth.currentUser.uid)
+            await updateDoc(docRef, {
+                personagensCriados: arrayRemove(pdf)
+            })
         } catch (error) {
             console.log('Erro: ' + error)
         } finally {

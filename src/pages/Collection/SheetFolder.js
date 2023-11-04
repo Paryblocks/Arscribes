@@ -52,7 +52,7 @@ const SheetFolder = () => {
           <button className={styles.big} onClick={handleOpenModal}>Adicionar personagem</button>
         </div>
         <div className={styles.sas}>
-          <GaleriaChara fichas={folder.personagensPasta || []}/>
+          <GaleriaChara fichas={folder.personagensPasta || []} pasta={itemId}/>
           <ModalChara isOpen={modalIsOpen} onClose={handleCloseModal} check={isCustom} pdf={folder.sheetURL} temp={folder.template} pasta={itemId}/>
         </div>
     </div>
