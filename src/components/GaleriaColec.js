@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSheet } from '../hooks/useSheet'
 import { NavLink } from "react-router-dom"
+import ModalDelete from './ModalDelete'
 import icon from '../images/FolderIcon.png'
 import delicon from '../images/Deletebutton.png'
 
@@ -9,11 +10,22 @@ import styles from './GaleriaFichas.module.css'
 const GaleriaColec = () => { 
     const [folds, setFolds] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
-    const galleryRef = useRef(null)
-    const { getFolders, deleteFolder } = useSheet()
+    const [modalIsOpen, setModalIsOpen] = useState(false)
 
-    const handleDelete = (data) => {
-        deleteFolder(data)
+    const { getFolders, deleteFolder } = useSheet()
+    const galleryRef = useRef(null)
+
+    const handleOpenModal = () => {
+        setModalIsOpen(true)
+    }
+    
+    const handleCloseModal = () => {
+        setModalIsOpen(false)
+    }
+
+    const handleDelete = async (data) => {
+        const res = await deleteFolder(data)
+        window.location.reload();
     }
 
     useEffect(() => {
@@ -51,7 +63,8 @@ const GaleriaColec = () => {
                         <img src={icon} alt="Icone da pasta" className={styles.imager}/>
                     </div>
                   </NavLink>
-                  <button onClick={() => {handleDelete(fold)}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
+                  <button onClick={() => {handleOpenModal()}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
+                  <ModalDelete isOpen={modalIsOpen} onClose={handleCloseModal} onDelete={() => {handleDelete(fold)}}/>
                 </div>
             ))}
             </div>

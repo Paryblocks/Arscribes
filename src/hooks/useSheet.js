@@ -49,7 +49,7 @@ export const useSheet = () => {
                 Idcriador: auth.currentUser.uid,
                 NomeCriador: auth.currentUser.displayName
             })
-
+            
             if(data.template){
                 updateDoc(sheetDocRef, {
                     template: data.templ
@@ -181,16 +181,16 @@ export const useSheet = () => {
             const userDocRef = doc(usuariosCollectionRef, auth.currentUser.uid)
 
             const userDoc = await getDoc(userDocRef)
-            const personagensCriados = userDoc.data().personagensCriados || []            
-            personagensCriados.push(sheetURL)
+            const personagensCriados = userDoc.data().personagensCriados || [];            
+            await personagensCriados.push(sheetURL)
             await updateDoc(userDocRef, { personagensCriados })
 
             const pastaRef = collection(db, "pastas")
             const pastaDocRef = doc(pastaRef, id)
 
             const pastaDoc = await getDoc(pastaDocRef)
-            const personagensPasta = pastaDoc.data().personagensPasta || []            
-            personagensPasta.push(sheetURL)
+            const personagensPasta = pastaDoc.data().personagensPasta || [];          
+            await personagensPasta.push(sheetURL)
             await updateDoc(pastaDocRef, { personagensPasta })
 
         } catch (error) {
@@ -214,6 +214,13 @@ export const useSheet = () => {
                 await updateDoc(docRef, {
                   personagensCriados: arrayRemove(personagem)
                 })
+
+                const urlParts = personagem.split('/')
+                const encodedFileName = urlParts[urlParts.length - 1]
+                const decodedFileName = decodeURIComponent(encodedFileName)
+                const index = decodedFileName.indexOf('?')
+                const result = decodedFileName.slice(0, index);
+                await deleteObject(ref(storage, result))
               })
       
         } catch (error) {
@@ -238,6 +245,46 @@ export const useSheet = () => {
             await updateDoc(docRef, {
                 personagensCriados: arrayRemove(pdf)
             })
+
+            const urlParts = pdf.split('/')
+            const encodedFileName = urlParts[urlParts.length - 1]
+            const decodedFileName = decodeURIComponent(encodedFileName)
+            const index = decodedFileName.indexOf('?')
+            const result = decodedFileName.slice(0, index);
+            await deleteObject(ref(storage, result))
+
+        } catch (error) {
+            console.log('Erro: ' + error)
+        } finally {
+            setLoading(false)
+        }
+      }
+
+    //deletar ficha
+    const deleteSheet = async (data) => {
+        checkIfIsCancelled()
+        setLoading(true)
+
+        try {
+            const docRef = doc(db, 'usuarios', auth.currentUser.uid)
+            await updateDoc(docRef, {
+                fichasCriadas: arrayRemove(data.sheetURL)
+            })
+
+            const sheetsQuery = collection(db, 'usuarios')
+            const sheetsQuerySnapshot = await getDocs(sheetsQuery)
+            sheetsQuerySnapshot.forEach(async (user) => {
+                await updateDoc(user, {
+                    colecao: arrayRemove(data.sheetURL)
+                })
+            })
+
+            const sheetsQuery2 = query(collection(db, 'fichas'), where('sheetURL', '==', data.sheetURL))
+            const sheetsQuery2Snapshot = await getDocs(sheetsQuery2)
+            sheetsQuery2Snapshot.forEach(async (doc) => {
+                await deleteDoc(doc.ref);
+            });
+      
         } catch (error) {
             console.log('Erro: ' + error)
         } finally {
@@ -258,6 +305,7 @@ export const useSheet = () => {
         saveCharacter,
         deleteFolder,
         deleteChara,
+        deleteSheet,
         folder,
         loading
     }

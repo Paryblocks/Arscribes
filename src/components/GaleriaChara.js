@@ -1,17 +1,29 @@
 import { useState, useEffect, useRef } from 'react'
-import delicon from '../images/Deletebutton.png'
 import { useSheet } from '../hooks/useSheet'
+import ModalDelete from './ModalDelete'
+import delicon from '../images/Deletebutton.png'
 
 import styles from './GaleriaFichas.module.css'
 
 const GaleriaChara = ({fichas, pasta}) => { 
     const [pdfs, setPdfs] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+
     const { deleteChara } = useSheet()
     const galleryRef = useRef(null)
 
-    const handleDelete = (data) => {
-        deleteChara(pasta, data)
+    const handleOpenModal = () => {
+        setModalIsOpen(true)
+    }
+    
+    const handleCloseModal = () => {
+        setModalIsOpen(false)
+    }
+
+    const handleDelete = async (data) => {
+        const res = await deleteChara(pasta, data)
+        window.location.reload();
     }
 
     useEffect(() => {
@@ -40,8 +52,9 @@ const GaleriaChara = ({fichas, pasta}) => {
                     <div className={styles.kok}>
                         <iframe src={pdf} className={styles.viewer}></iframe>
                         <div className={styles.menu}>
-                            <a href={pdf} download={`${pdf}.pdf`} className={styles.download}>Baixar</a>
-                            <button onClick={() => {handleDelete(pdf)}} className={styles.deletaru}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
+                            <a href={pdf} download={`${pdf}.pdf`} className={styles.download}>Visualizar</a>
+                            <button onClick={() => {handleOpenModal()}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
+                            <ModalDelete isOpen={modalIsOpen} onClose={handleCloseModal} onDelete={() => {handleDelete(pdf)}}/>
                         </div>
                         <br></br>
                     </div>

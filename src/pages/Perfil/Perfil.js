@@ -44,7 +44,7 @@ const Perfil = () => {
             <br></br>
             <h2>Criações de {user.displayName}</h2>
             <hr></hr>
-            <GaleriaFichas fichas={list}/>                   
+            <GaleriaFichas fichas={list} confirm={true}/>                   
         </div>
     </div>
   )

@@ -1,15 +1,14 @@
 .container {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 5%;
+    gap: 3%;
 }
 
 .pdf {
     display: inline-block;
-    margin-bottom: 10vh;
+    margin-bottom: 5vh;
     width: 200px;
-    height: 295px;
+    height: 30vh;
     overflow: hidden;
 }
 
@@ -26,7 +25,7 @@
 
 .viewer{
     width: 200px;
-    height: 295px;
+    height: 30vh;
 }
 
 .folder{
@@ -34,8 +33,6 @@
     flex-direction: column;
     align-items: center;
     margin-top: 10vh;
-    margin-left: 5vh;
-    margin-right: 5vh;
 }
 
 .imager{
@@ -84,6 +81,7 @@
 
 .menu img{
     vertical-align: middle;
+    margin-left: 70px;
 }
 
 .deletaru{
@@ -101,4 +99,9 @@
     cursor: pointer;
     margin-bottom: 10vh;
     margin-left: 33%;
+}
+
+.ajustar{
+    position: relative;
+    bottom: 10vh;
 }

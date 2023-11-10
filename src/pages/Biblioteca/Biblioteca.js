@@ -6,6 +6,7 @@ const Biblioteca = () => {
     <div className={styles.container}>
         <div className={styles.box}>
             <h1>Biblioteca</h1>
+            <br></br>
             <GaleriaFichas></GaleriaFichas>
         </div>
     </div>

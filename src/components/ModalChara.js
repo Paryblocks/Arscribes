@@ -13,20 +13,21 @@ const ModalChara = ({ isOpen, onClose, check, temp, pdf, pasta }) => {
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0])
-}
+  }
 
     const handleSave = async () => {
       if(check){
         const template = temp
-        generate({ template, inputs: forma.getInputs() }).then((pdf) => {
-          const save = new Blob([pdf.buffer], { type: 'application/pdf' })
-          saveCharacter(pasta, save)
-          setCarregado(false)
-          onClose()
-        })
-      } else {
-        saveCharacter(pasta, file)
+        const ficha = await generate({ template, inputs: forma.getInputs() })
+        const save = new Blob([ficha.buffer], { type: 'application/pdf' })
+        const res = await saveCharacter(pasta, save)
+        setCarregado(false)
         onClose()
+        window.location.reload();
+      } else {
+        const res = await saveCharacter(pasta, file)
+        onClose()
+        window.location.reload();
       }
     }
 
@@ -68,8 +69,8 @@ const ModalChara = ({ isOpen, onClose, check, temp, pdf, pasta }) => {
             </div>
           )}
           <div className={styles.space}>
-            <button onClick={handleSave}>Salvar</button>
-            <button onClick={handleCLose}>Fechar</button>
+            <button onClick={() => {handleSave()}}>Salvar</button>
+            <button onClick={() => {handleCLose()}}>Fechar</button>
           </div>  
         </div>
       </div>
