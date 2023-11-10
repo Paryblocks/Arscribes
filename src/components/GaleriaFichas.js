@@ -40,9 +40,8 @@ const GaleriaFichas = ({fichas, confirm}) => {
                 setPdfs(listaFichas || [fichas])
               }
         }
-
         fetchPdfs()
-    }, [])
+    }, [fichas])
 
     const fichasPerPage = 4
     const startIndex = currentPage * fichasPerPage
@@ -93,7 +92,7 @@ const GaleriaFichas = ({fichas, confirm}) => {
                     </button>
                     </>
                 ) : (
-                    <p>Nenhuma ficha encontrada, tente recarregar a página!</p>
+                    <p>Nenhuma ficha encontrada!</p>
                 )}
                 </div>
         </div>
