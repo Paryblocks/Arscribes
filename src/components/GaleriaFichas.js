@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRetrieveDatabase } from '../hooks/useRetrieveDatabase'
+import { useAuthentication } from '../hooks/useAuthentication'
 import { useSheet } from '../hooks/useSheet'
 import { NavLink } from "react-router-dom"
 import ModalDelete from './ModalDelete'
@@ -15,6 +16,7 @@ const GaleriaFichas = ({fichas, confirm}) => {
 
     const { getSheets } = useRetrieveDatabase()
     const { deleteSheet } = useSheet()
+    const { auth } = useAuthentication()
 
     const handleOpenModal = () => {
         setModalIsOpen(true)
@@ -66,7 +68,7 @@ const GaleriaFichas = ({fichas, confirm}) => {
                     <span>{pdf.nome}</span>
                     <iframe src={pdf.sheetURL} className={styles.viewer}></iframe>    
                   </NavLink>
-                  {confirm ? <div className={styles.ajustar}><button onClick={() => {handleOpenModal()}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button></div> : ''}
+                  {(confirm && pdf.Idcriador === auth.currentUser.uid) ? <div className={styles.ajustar}><button onClick={() => {handleOpenModal()}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button></div> : ''}
                   <ModalDelete isOpen={modalIsOpen} onClose={handleCloseModal} onDelete={() => {handleDelete(pdf)}}/>
                 </div>
             ))}
