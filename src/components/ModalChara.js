@@ -16,18 +16,22 @@ const ModalChara = ({ isOpen, onClose, check, temp, pdf, pasta }) => {
   }
 
     const handleSave = async () => {
-      if(check){
-        const template = temp
-        const ficha = await generate({ template, inputs: forma.getInputs() })
-        const save = new Blob([ficha.buffer], { type: 'application/pdf' })
-        const res = await saveCharacter(pasta, save)
-        setCarregado(false)
-        onClose()
-        window.location.reload();
-      } else {
-        const res = await saveCharacter(pasta, file)
-        onClose()
-        window.location.reload();
+      if(file === null){
+        window.alert('Nenhum personagem detectado, por favor, envie um abaixo')
+      }else{
+        if(check){
+          const template = temp
+          const ficha = await generate({ template, inputs: forma.getInputs() })
+          const save = new Blob([ficha.buffer], { type: 'application/pdf' })
+          const res = await saveCharacter(pasta, save)
+          setCarregado(false)
+          onClose()
+          window.location.reload();
+        } else {
+          const res = await saveCharacter(pasta, file)
+          onClose()
+          window.location.reload();
+        }
       }
     }
 
