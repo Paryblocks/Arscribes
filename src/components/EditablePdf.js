@@ -34,7 +34,6 @@ const EditablePDFViewer = () => {
     generate({ template, inputs }).then((pdf) => {
       const save = new Blob([pdf.buffer], { type: 'application/pdf' })
       setFicha(save)
-
     })
     setModalIsOpen(true)
   }

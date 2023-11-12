@@ -50,7 +50,7 @@ export const useSheet = () => {
                 NomeCriador: auth.currentUser.displayName
             })
             
-            if(data.template){
+            if(data.templ){
                 updateDoc(sheetDocRef, {
                     template: data.templ
                 })   
