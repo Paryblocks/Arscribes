@@ -122,9 +122,19 @@ export const useAuthentication = () => {
             const userDocRef = doc(usuariosCollectionRef, auth.currentUser.uid)
             await setDoc(userDocRef, {
               displayName: data.nome,
-              bio: data.bio,
-              sistemas: data.sistemas.split(",").map((sistema) => sistema.trim()),
             }, { merge: true } )
+
+            if (data.bio) {
+                await setDoc(userDocRef, {
+                    bio: data.bio,
+                }, { merge: true } )
+            }
+
+            if (data.sistemas) {
+                await setDoc(userDocRef, {
+                    sistemas: data.sistemas.split(",").map((sistema) => sistema.trim()),
+                  }, { merge: true } )
+            }
         
             if (data.foto) {
                 const storageRef = ref(storage, 'profiles/' + auth.currentUser.uid + '/perfil.jpg')

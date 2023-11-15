@@ -68,7 +68,7 @@ const Editar = () => {
                 <h3>Foto de Perfil:</h3>
                 <input type="file" accept="image/png, image/jpeg" name="foto" onChange={handleFileChange}/>
                 <h2>Sobre:</h2>
-                <textarea className={styles.bio} required placeholder='Um pouco sobre você..' onChange={(e) => setBio(e.target.value)} value={bio}></textarea>
+                <textarea className={styles.bio} placeholder='Um pouco sobre você..' onChange={(e) => setBio(e.target.value)} value={bio}></textarea>
                 <br></br>
                 {!loading && <button>Confirmar</button>}
                 {loading && <button disabled>Aguarde...</button>}

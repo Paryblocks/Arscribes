@@ -11,11 +11,13 @@ const GaleriaColec = () => {
     const [folds, setFolds] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [infoModal, setInfoModal] = useState("")
 
     const { getFolders, deleteFolder } = useSheet()
     const galleryRef = useRef(null)
 
-    const handleOpenModal = () => {
+    const handleOpenModal = (info) => {
+        setInfoModal(info)
         setModalIsOpen(true)
     }
     
@@ -23,8 +25,8 @@ const GaleriaColec = () => {
         setModalIsOpen(false)
     }
 
-    const handleDelete = async (data) => {
-        const res = await deleteFolder(data)
+    const handleDelete = async () => {
+        const res = await deleteFolder(infoModal)
         window.location.reload();
     }
 
@@ -63,8 +65,8 @@ const GaleriaColec = () => {
                         <img src={icon} alt="Icone da pasta" className={styles.imager}/>
                     </div>
                   </NavLink>
-                  <button onClick={() => {handleOpenModal()}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
-                  <ModalDelete isOpen={modalIsOpen} onClose={handleCloseModal} onDelete={() => {handleDelete(fold)}}/>
+                  <button onClick={() => {handleOpenModal(fold)}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
+                  <ModalDelete isOpen={modalIsOpen} onClose={handleCloseModal} onDelete={() => {handleDelete()}}/>
                 </div>
             ))}
             </div>

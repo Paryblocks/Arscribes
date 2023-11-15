@@ -9,11 +9,13 @@ const GaleriaChara = ({fichas, pasta}) => {
     const [pdfs, setPdfs] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [infoModal, setInfoModal] = useState("")
 
     const { deleteChara } = useSheet()
     const galleryRef = useRef(null)
 
-    const handleOpenModal = () => {
+    const handleOpenModal = (info) => {
+        setInfoModal(info)
         setModalIsOpen(true)
     }
     
@@ -21,8 +23,8 @@ const GaleriaChara = ({fichas, pasta}) => {
         setModalIsOpen(false)
     }
 
-    const handleDelete = async (data) => {
-        const res = await deleteChara(pasta, data)
+    const handleDelete = async () => {
+        const res = await deleteChara(pasta, infoModal)
         window.location.reload();
     }
 
@@ -53,8 +55,8 @@ const GaleriaChara = ({fichas, pasta}) => {
                         <iframe src={pdf} className={styles.viewer}></iframe>
                         <div className={styles.menu}>
                             <a href={pdf} download={`${pdf}.pdf`} className={styles.download}>Visualizar</a>
-                            <button onClick={() => {handleOpenModal()}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
-                            <ModalDelete isOpen={modalIsOpen} onClose={handleCloseModal} onDelete={() => {handleDelete(pdf)}}/>
+                            <button onClick={() => {handleOpenModal(pdf)}} className={styles.deletar}><img src={delicon} alt='Excluir' className={styles.deletari}/></button>
+                            <ModalDelete isOpen={modalIsOpen} onClose={handleCloseModal} onDelete={() => {handleDelete()}}/>
                         </div>
                         <br></br>
                     </div>

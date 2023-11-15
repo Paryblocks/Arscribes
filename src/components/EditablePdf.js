@@ -1,5 +1,5 @@
 import { Designer} from '@pdfme/ui'
-import { BLANK_PDF, generate, checkTemplate } from '@pdfme/generator'
+import { BLANK_PDF, generate } from '@pdfme/generator'
 import { useEffect, useState } from 'react'
 import styles from "./EditablePdf.module.css"
 import ModalSave from './ModalSave'
@@ -30,12 +30,16 @@ const EditablePDFViewer = () => {
   const handleSave = () => {
     const template = modelo.getTemplate()
     const inputs = template.sampledata ?? []
-    setTempl(template)
-    generate({ template, inputs }).then((pdf) => {
+    if(template.schemas < 1){
+      window.alert("Adicione pelo menos um campo!")
+    } else {
+      setTempl(template)
+      generate({ template, inputs }).then((pdf) => {
       const save = new Blob([pdf.buffer], { type: 'application/pdf' })
       setFicha(save)
-    })
-    setModalIsOpen(true)
+      })
+      setModalIsOpen(true)
+    }
   }
 
   const handleCloseModal = () => {
