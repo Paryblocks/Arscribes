@@ -30,7 +30,6 @@ const Login = () => {
     }
 
     const res = await login(user)
-    window.location.reload();
   }
 
   useEffect(() => {
