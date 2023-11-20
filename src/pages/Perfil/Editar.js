@@ -33,6 +33,7 @@ const Editar = () => {
     }
 
     const res = await editUser(updatedUser)
+    window.location.reload();
     navigate(`/profile?id=${auth.currentUser.uid}`)
   }
 
